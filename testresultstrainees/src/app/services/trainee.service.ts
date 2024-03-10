@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { trainee } from '../models/data.model';
+import { findIndex } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TraineeService {
-
-  constructor() { }
+  constructor() {}
   ELEMENT_DATA: trainee[] = [
     {
       id: '1',
@@ -79,17 +79,28 @@ export class TraineeService {
       subject: 'test',
     },
   ];
-  addTrainee(formValue:any){
+  addTrainee(formValue: any) {
     const { id, name, grade, date_joined, subject } = formValue;
     const findTrainee = this.ELEMENT_DATA.some((trainee) => trainee.id === id);
-    if(!findTrainee){
+    if (!findTrainee) {
       this.ELEMENT_DATA.push({ id, name, grade: +grade, date_joined, subject });
       return true;
     }
     return false;
   }
-  removeTrainee(id:string){
-    const traineeIndex = this.ELEMENT_DATA.findIndex((trainee) => trainee.id === id);
-    this.ELEMENT_DATA.splice(traineeIndex,1);
+  removeTrainee(id: string) {
+    const traineeIndex = this.ELEMENT_DATA.findIndex(
+      (trainee) => trainee.id === id
+    );
+    this.ELEMENT_DATA.splice(traineeIndex, 1);
+  }
+  updateTrainee(formValue: any) {
+    const {id,name,grade,email,date_joined,address,city,country,zip,subject} = formValue;
+    const findTrainee = this.ELEMENT_DATA.findIndex((trainee) => trainee.id === id);
+    if (findTrainee) {
+      this.ELEMENT_DATA[findTrainee] = { id, name, grade: +grade, date_joined, subject };
+      return true;
+    }
+    return false;
   }
 }

@@ -63,6 +63,7 @@ export class DataComponent implements AfterViewInit {
   gridChecked: boolean = false;
   clickedRows = new Set<trainee>();
 
+
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
 
@@ -92,11 +93,20 @@ export class DataComponent implements AfterViewInit {
     if (this.traineeForm.status === 'VALID') {
       const { id, name, grade, date_joined, subject } = this.traineeForm.value;
       if (id && name && grade && date_joined && subject) {
-        let res = this.traineeService.addTrainee(this.traineeForm.value);
-        if (res) {
-          this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
-          this.table.renderRows();
-          this.traineeForm.reset();
+        if(this.showDetails && this.gridChecked){
+          let updateResult = this.traineeService.updateTrainee(this.traineeForm.value);
+          if (updateResult) {
+            this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
+            this.table.renderRows();
+          }
+        }
+        if(this.showDetails && !this.gridChecked){
+          let addResult = this.traineeService.addTrainee(this.traineeForm.value);
+          if (addResult) {
+            this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
+            this.table.renderRows();
+            this.traineeForm.reset();
+          }
         }
       }
     }
@@ -114,6 +124,7 @@ export class DataComponent implements AfterViewInit {
       this.traineeForm.patchValue(row);
     }
   }
+
   removeTrainee() {
     const { id } = this.traineeForm.value;
     if (id) {
