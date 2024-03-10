@@ -8,11 +8,10 @@ import {
 import { trainee } from '../../models/data.model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
-
+import { FormsModule } from '@angular/forms';
 import {
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -28,7 +27,8 @@ import { DatePipe } from '@angular/common';
     MatPaginatorModule,
     MatInputModule,
     ReactiveFormsModule,
-    DatePipe
+    DatePipe,
+    FormsModule,
   ],
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
@@ -45,7 +45,7 @@ export class DataComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
-  dataSource2 = [...this.traineeService.ELEMENT_DATA];
+  dataSource2  = [...this.traineeService.ELEMENT_DATA];
   showDetails: boolean = false;
   traineeForm = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -64,7 +64,7 @@ export class DataComponent implements AfterViewInit {
   paginator!: MatPaginator;
   gridChecked: boolean = false;
   clickedRows = new Set<trainee>();
-
+  filterBy: string = '';
 
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
@@ -95,15 +95,19 @@ export class DataComponent implements AfterViewInit {
     if (this.traineeForm.status === 'VALID') {
       const { id, name, grade, date_joined, subject } = this.traineeForm.value;
       if (id && name && grade && date_joined && subject) {
-        if(this.showDetails && this.gridChecked){
-          let updateResult = this.traineeService.updateTrainee(this.traineeForm.value);
+        if (this.showDetails && this.gridChecked) {
+          let updateResult = this.traineeService.updateTrainee(
+            this.traineeForm.value
+          );
           if (updateResult) {
             this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
             this.table.renderRows();
           }
         }
-        if(this.showDetails && !this.gridChecked){
-          let addResult = this.traineeService.addTrainee(this.traineeForm.value);
+        if (this.showDetails && !this.gridChecked) {
+          let addResult = this.traineeService.addTrainee(
+            this.traineeForm.value
+          );
           if (addResult) {
             this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
             this.table.renderRows();
@@ -115,29 +119,30 @@ export class DataComponent implements AfterViewInit {
   }
   chooseRow(row: any) {
     this.traineeForm.reset();
-    if(row.id === this.traineeForm.value.id){
+    if (row.id === this.traineeForm.value.id) {
       this.showDetails = !this.showDetails;
       this.gridChecked = !this.gridChecked;
-    }
-    else{
+    } else {
       this.showDetails = true;
       this.gridChecked = true;
     }
     if (this.showDetails && this.gridChecked) {
       this.traineeForm.patchValue(row);
-      
-      this.traineeForm.get('date_joined')?.patchValue(this.formatDate(row.date_joined));
+
+      this.traineeForm
+        .get('date_joined')
+        ?.patchValue(this.formatDate(row.date_joined));
     }
   }
 
-  private formatDate(date:any) {
+  private formatDate(date: any) {
     const d = new Date(date);
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();
     const year = d.getFullYear();
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
-    return [year, day,month].join('-');
+    return [year, day, month].join('-');
   }
 
   removeTrainee() {
@@ -149,6 +154,15 @@ export class DataComponent implements AfterViewInit {
       this.traineeForm.reset();
       this.showDetails = false;
       this.gridChecked = false;
+    }
+  }
+  applyFilter() {
+    const filterBy = this.filterBy.split(':')[0];
+    const filter = this.filterBy.split(':')[1];
+    if(filterBy && filter){
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.filterBy.toLowerCase().includes(filter);
+      };
     }
   }
 }

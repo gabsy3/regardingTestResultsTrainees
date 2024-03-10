@@ -1,4 +1,5 @@
 export interface trainee {
+  filterBy?: any;
   id: string;
   name: string;
   grade: number;
