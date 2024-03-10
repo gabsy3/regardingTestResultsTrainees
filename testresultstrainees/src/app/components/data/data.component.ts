@@ -17,6 +17,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TraineeService } from '../../services/trainee.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-data',
@@ -27,6 +28,7 @@ import { TraineeService } from '../../services/trainee.service';
     MatPaginatorModule,
     MatInputModule,
     ReactiveFormsModule,
+    DatePipe
   ],
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',

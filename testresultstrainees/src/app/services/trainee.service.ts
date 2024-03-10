@@ -53,7 +53,7 @@ export class TraineeService {
     {
       id: '7',
       name: 'Nitrogen',
-      date_joined: '29-01-2024',
+      date_joined: '10-01-2024',
       grade: 77,
       subject: 'test',
     },
