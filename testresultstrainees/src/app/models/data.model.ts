@@ -11,7 +11,7 @@ export interface trainee {
   name: string;
   grade: number;
   email:string;
-  date_Joined: string;
+  date_joined: string;
   address:string;
   city:string;
   country:string;

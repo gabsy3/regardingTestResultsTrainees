@@ -45,23 +45,28 @@
             <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
         </div>
         @if(showDetails){
-        <div class="details col-4 d-flex justify-content start flex-column border">
+        <div class="col-4 border">
             <h3>Details</h3>
-            <div class="d-flex align-items-center"><span class="column-name">ID:</span><input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">Name:</span> <input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">Grade:</span> <input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">Email:</span> <input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">Date Joined:</span> <input type="text">
-            </div>
-            <div class="d-flex align-items-center"><span class="column-name">Address:</span> <input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">City:</span> <input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">Country:</span> <input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">Zip:</span> <input type="text"></div>
-            <div class="d-flex align-items-center"><span class="column-name">Subject:</span> <input type="text"></div>
-            <div class="d-flex justify-content-start">
-                <button mat-stroked-button (click)="saveTrainee()">Save</button>
-                <button mat-stroked-button (click)="closeTrainee()">Close</button>
-            </div>
+            <form class="details d-flex justify-content start flex-column" [formGroup]="traineeForm" (ngSubmit)="saveTrainee()">
+                <div class="d-flex align-items-center"><span class="column-name">ID:</span><input type="text" formControlName="id"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Name:</span> <input type="text" formControlName="name"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Grade:</span> <input type="text" formControlName="grade"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Email:</span> <input type="text" formControlName="email"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Date Joined:</span> <input type="text" formControlName="date_joined">
+                </div>
+                <div class="d-flex align-items-center"><span class="column-name">Address:</span> <input type="text" formControlName="address">
+                </div>
+                <div class="d-flex align-items-center"><span class="column-name">City:</span> <input type="text" formControlName="city"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Country:</span> <input type="text" formControlName="country">
+                </div>
+                <div class="d-flex align-items-center"><span class="column-name">Zip:</span> <input type="text" formControlName="zip"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Subject:</span> <input type="text" formControlName="subject">
+                </div>
+                <div class="d-flex justify-content-start">
+                    <button mat-stroked-button>Save</button>
+                    <button mat-stroked-button (click)="closeTrainee()">Close</button>
+                </div>
+            </form>
         </div>
         }
     </div>

@@ -1,8 +1,17 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { dataGridModel } from '../../models/data.model';
+import { dataGridModel, trainee } from '../../models/data.model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 const ELEMENT_DATA: dataGridModel[] = [
   { id: '1', name: 'Gabi', date: '01/03/2024', grade: 80, subject: 'Algebra' },
@@ -26,7 +35,13 @@ const ELEMENT_DATA: dataGridModel[] = [
 @Component({
   selector: 'app-data',
   standalone: true,
-  imports: [MatButtonModule, MatTableModule, MatPaginatorModule],
+  imports: [
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatInputModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
@@ -34,6 +49,18 @@ export class DataComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'date', 'grade', 'subject'];
   dataSource = new MatTableDataSource<dataGridModel>(ELEMENT_DATA);
   showDetails: boolean = false;
+  traineeForm = new FormGroup({
+    id: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    grade: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    date_joined: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
+    zip: new FormControl('', Validators.required),
+    subject: new FormControl('', Validators.required),
+  });
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -41,13 +68,15 @@ export class DataComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  openTrainee(){
+  openTrainee() {
     this.showDetails = true;
   }
-  closeTrainee(){
+  closeTrainee() {
     this.showDetails = false;
   }
-  saveTrainee(){
-    
+  saveTrainee() {
+    if(this.traineeForm.status === 'VALID'){
+      
+    }
   }
 }
