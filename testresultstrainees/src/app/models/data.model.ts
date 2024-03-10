@@ -5,3 +5,16 @@ export interface dataGridModel {
   grade: number;
   subject: string;
 }
+
+export interface trainee {
+  id: string;
+  name: string;
+  grade: number;
+  email:string;
+  date_Joined: string;
+  address:string;
+  city:string;
+  country:string;
+  zip:string;
+  subject: string;
+}
