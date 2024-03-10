@@ -112,6 +112,7 @@ export class DataComponent implements AfterViewInit {
     }
   }
   chooseRow(row: any) {
+    this.traineeForm.reset();
     if(row.id === this.traineeForm.value.id){
       this.showDetails = !this.showDetails;
       this.gridChecked = !this.gridChecked;
