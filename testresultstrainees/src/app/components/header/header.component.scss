@@ -2,10 +2,11 @@ header {
     .header-wrapper {
         background: #007c42;
         border-bottom: 1px dashed;
-        color: white;
-    }
-
-    .mr-10 {
-        margin-right: 10px;
+        button{
+            color: white;
+            &.active {
+                color: rgb(0, 0, 0);
+            }
+        }
     }
 }
