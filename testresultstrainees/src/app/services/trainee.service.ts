@@ -97,7 +97,7 @@ export class TraineeService {
   updateTrainee(formValue: any) {
     const {id,name,grade,email,date_joined,address,city,country,zip,subject} = formValue;
     const findTrainee = this.ELEMENT_DATA.findIndex((trainee) => trainee.id === id);
-    if (findTrainee > 0 ) {
+    if (findTrainee > -1 ) {
       this.ELEMENT_DATA[findTrainee] = { id, name, grade: +grade ,email , date_joined, address , city,country,zip, subject };
       return true;
     }
