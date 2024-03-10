@@ -84,6 +84,8 @@ export class TraineeService {
     const findTrainee = this.ELEMENT_DATA.some((trainee) => trainee.id === id);
     if(!findTrainee){
       this.ELEMENT_DATA.push({ id, name, grade: +grade, date_joined, subject });
+      return true;
     }
+    return false;
   }
 }

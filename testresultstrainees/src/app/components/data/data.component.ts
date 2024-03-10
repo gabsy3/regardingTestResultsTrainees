@@ -72,10 +72,12 @@ export class DataComponent implements AfterViewInit {
     if (this.traineeForm.status === 'VALID') {
       const { id, name, grade, date_joined, subject } = this.traineeForm.value;
       if(id && name &&  grade && date_joined &&  subject){
-        this.traineeService.addTrainee(this.traineeForm.value);
-        this.dataSource2 = [...this.traineeService.ELEMENT_DATA]
-        this.table.renderRows();
-        this.traineeForm.reset();
+        let res = this.traineeService.addTrainee(this.traineeForm.value);
+        if(res){
+          this.dataSource2 = [...this.traineeService.ELEMENT_DATA]
+          this.table.renderRows();
+          this.traineeForm.reset();
+        }
       }
     }
   }
