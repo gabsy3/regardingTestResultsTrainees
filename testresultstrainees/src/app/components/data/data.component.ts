@@ -75,6 +75,7 @@ export class DataComponent implements AfterViewInit {
         this.traineeService.addTrainee(this.traineeForm.value);
         this.dataSource2 = [...this.traineeService.ELEMENT_DATA]
         this.table.renderRows();
+        this.traineeForm.reset();
       }
     }
   }
