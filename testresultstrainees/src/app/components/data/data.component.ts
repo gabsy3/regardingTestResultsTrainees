@@ -135,7 +135,6 @@ export class DataComponent implements AfterViewInit {
     const year = d.getFullYear();
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
-    const newDate = [year, month, day].join('-');
     return [year, day,month].join('-');
   }
 
