@@ -4,7 +4,7 @@
             <span>Filter</span>
             <input type="text" placeholder="search">
             <button mat-stroked-button color="primary" (click)="openTrainee()">Add</button>
-            <button mat-stroked-button color="primary" [disabled]="!gridChecked">Remove</button>
+            <button mat-stroked-button color="primary" [disabled]="!gridChecked" (click)="removeTrainee()">Remove</button>
         </div>
     </div>
     <div class="row">

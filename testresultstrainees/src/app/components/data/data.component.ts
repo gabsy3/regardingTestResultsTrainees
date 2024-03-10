@@ -83,11 +83,22 @@ export class DataComponent implements AfterViewInit {
     }
   }
   chooseRow(row:any){
-    this.showDetails = true;
-    this.traineeForm.patchValue(row)
+    this.showDetails = !this.showDetails;
+    this.gridChecked = !this.gridChecked;
+    if(this.showDetails && this.gridChecked){
+      this.traineeForm.patchValue(row);
+
+    }
   }
   removeTrainee() {
-    // this.dataSource.pop();
-    // this.table.renderRows();
+    const {id} = this.traineeForm.value;
+    if(id){
+      this.traineeService.removeTrainee(id);
+      this.dataSource2 = [...this.traineeService.ELEMENT_DATA]
+      this.table.renderRows();
+      this.traineeForm.reset();
+      this.showDetails = false;
+      this.gridChecked = false;
+    }
   }
 }

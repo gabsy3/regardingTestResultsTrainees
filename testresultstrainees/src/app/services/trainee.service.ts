@@ -88,4 +88,8 @@ export class TraineeService {
     }
     return false;
   }
+  removeTrainee(id:string){
+    const traineeIndex = this.ELEMENT_DATA.findIndex((trainee) => trainee.id === id);
+    this.ELEMENT_DATA.splice(traineeIndex,1);
+  }
 }
