@@ -55,6 +55,7 @@ export class DataComponent implements AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   gridChecked: boolean = false;
+  clickedRows = new Set<trainee>();
 
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
@@ -80,6 +81,10 @@ export class DataComponent implements AfterViewInit {
         }
       }
     }
+  }
+  chooseRow(row:any){
+    this.showDetails = true;
+    this.traineeForm.patchValue(row)
   }
   removeTrainee() {
     // this.dataSource.pop();
