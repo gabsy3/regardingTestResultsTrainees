@@ -16,19 +16,16 @@
                     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>
 
-                <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
 
-                <!-- Weight Column -->
                 <ng-container matColumnDef="date_joined">
                     <th mat-header-cell *matHeaderCellDef> Date </th>
                     <td mat-cell *matCellDef="let element"> {{element.date_joined}} </td>
                 </ng-container>
 
-                <!-- Symbol Column -->
                 <ng-container matColumnDef="grade">
                     <th mat-header-cell *matHeaderCellDef> Grade </th>
                     <td mat-cell *matCellDef="let element"> {{element.grade}} </td>
@@ -50,9 +47,9 @@
             <form class="details d-flex justify-content start flex-column" [formGroup]="traineeForm" (ngSubmit)="saveTrainee()">
                 <div class="d-flex align-items-center"><span class="column-name">ID:</span><input type="text" formControlName="id"></div>
                 <div class="d-flex align-items-center"><span class="column-name">Name:</span> <input type="text" formControlName="name"></div>
-                <div class="d-flex align-items-center"><span class="column-name">Grade:</span> <input type="text" formControlName="grade"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Grade:</span> <input type="number" formControlName="grade"></div>
                 <div class="d-flex align-items-center"><span class="column-name">Email:</span> <input type="text" formControlName="email"></div>
-                <div class="d-flex align-items-center"><span class="column-name">Date Joined:</span> <input type="text" formControlName="date_joined">
+                <div class="d-flex align-items-center"><span class="column-name">Date Joined:</span> <input type="date" formControlName="date_joined">
                 </div>
                 <div class="d-flex align-items-center"><span class="column-name">Address:</span> <input type="text" formControlName="address">
                 </div>
