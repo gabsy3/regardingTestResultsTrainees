@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatTableModule,
@@ -16,79 +16,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TraineeService } from '../../services/trainee.service';
 
-const ELEMENT_DATA: trainee[] = [
-  {
-    id: '1',
-    name: 'Gabi',
-    date_joined: '01/03/2024',
-    grade: 80,
-    subject: 'Algebra',
-  },
-  {
-    id: '2',
-    name: 'Maly',
-    date_joined: '08/03/2024',
-    grade: 85,
-    subject: 'History',
-  },
-  {
-    id: '3',
-    name: 'Yossi',
-    date_joined: '10/02/2024',
-    grade: 100,
-    subject: 'test',
-  },
-  {
-    id: '4',
-    name: 'Beryllium',
-    date_joined: '10/03/2024',
-    grade: 30,
-    subject: 'test',
-  },
-  {
-    id: '5',
-    name: 'Boron',
-    date_joined: '12/05/2023',
-    grade: 65,
-    subject: 'test',
-  },
-  {
-    id: '6',
-    name: 'Carbon',
-    date_joined: '10/03/2023',
-    grade: 87,
-    subject: 'test',
-  },
-  {
-    id: '7',
-    name: 'Nitrogen',
-    date_joined: '29/01/2024',
-    grade: 77,
-    subject: 'test',
-  },
-  {
-    id: '8',
-    name: 'Oxygen',
-    date_joined: '10/03/2024',
-    grade: 90,
-    subject: 'test',
-  },
-  {
-    id: '9',
-    name: 'Fluorine',
-    date_joined: '10/03/2024',
-    grade: 55,
-    subject: 'test',
-  },
-  {
-    id: '10',
-    name: 'Neon',
-    date_joined: '10/03/2024',
-    grade: 80,
-    subject: 'test',
-  },
-];
+
 
 @Component({
   selector: 'app-data',
@@ -104,9 +34,10 @@ const ELEMENT_DATA: trainee[] = [
   styleUrl: './data.component.scss',
 })
 export class DataComponent implements AfterViewInit {
+  traineeService = inject(TraineeService);
   displayedColumns: string[] = ['id', 'name', 'date_joined', 'grade', 'subject'];
-  dataSource = new MatTableDataSource<trainee>(ELEMENT_DATA);
-  dataSource2 = [...ELEMENT_DATA]
+  dataSource = new MatTableDataSource<trainee>(this.traineeService.ELEMENT_DATA);
+  dataSource2 = [...this.traineeService.ELEMENT_DATA]
   showDetails: boolean = false;
   traineeForm = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -141,7 +72,8 @@ export class DataComponent implements AfterViewInit {
     if (this.traineeForm.status === 'VALID') {
       const { id, name, grade, date_joined, subject } = this.traineeForm.value;
       if(id && name &&  grade && date_joined &&  subject){
-        this.dataSource2.push({ id, name, grade: +grade, date_joined, subject });
+        this.traineeService.addTrainee(this.traineeForm.value);
+        this.dataSource2 = [...this.traineeService.ELEMENT_DATA]
         this.table.renderRows();
       }
     }
