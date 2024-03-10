@@ -4,12 +4,12 @@
             <span>Filter</span>
             <input type="text" placeholder="search">
             <button mat-stroked-button color="primary" (click)="openTrainee()">Add</button>
-            <button mat-stroked-button color="primary">Remove</button>
+            <button mat-stroked-button color="primary" [disabled]="!gridChecked">Remove</button>
         </div>
     </div>
     <div class="row">
         <div class="col-8">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
                 <!-- Position Column -->
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -23,9 +23,9 @@
                 </ng-container>
 
                 <!-- Weight Column -->
-                <ng-container matColumnDef="date">
+                <ng-container matColumnDef="date_joined">
                     <th mat-header-cell *matHeaderCellDef> Date </th>
-                    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.date_joined}} </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
