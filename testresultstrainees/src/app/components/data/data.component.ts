@@ -47,4 +47,7 @@ export class DataComponent implements AfterViewInit {
   closeTrainee(){
     this.showDetails = false;
   }
+  saveTrainee(){
+    
+  }
 }
