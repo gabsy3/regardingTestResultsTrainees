@@ -18,8 +18,6 @@ import {
 } from '@angular/forms';
 import { TraineeService } from '../../services/trainee.service';
 
-
-
 @Component({
   selector: 'app-data',
   standalone: true,
@@ -35,9 +33,17 @@ import { TraineeService } from '../../services/trainee.service';
 })
 export class DataComponent implements AfterViewInit {
   traineeService = inject(TraineeService);
-  displayedColumns: string[] = ['id', 'name', 'date_joined', 'grade', 'subject'];
-  dataSource = new MatTableDataSource<trainee>(this.traineeService.ELEMENT_DATA);
-  dataSource2 = [...this.traineeService.ELEMENT_DATA]
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'date_joined',
+    'grade',
+    'subject',
+  ];
+  dataSource = new MatTableDataSource<trainee>(
+    this.traineeService.ELEMENT_DATA
+  );
+  dataSource2 = [...this.traineeService.ELEMENT_DATA];
   showDetails: boolean = false;
   traineeForm = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -64,6 +70,19 @@ export class DataComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
   openTrainee() {
+    this.traineeForm.patchValue({
+      id: '',
+      name: '',
+      grade: '',
+      email: '',
+      date_joined: '',
+      address: '',
+      city: '',
+      country: '',
+      zip: '',
+      subject: '',
+    });
+    this.gridChecked = false;
     this.showDetails = true;
   }
   closeTrainee() {
@@ -72,29 +91,28 @@ export class DataComponent implements AfterViewInit {
   saveTrainee() {
     if (this.traineeForm.status === 'VALID') {
       const { id, name, grade, date_joined, subject } = this.traineeForm.value;
-      if(id && name &&  grade && date_joined &&  subject){
+      if (id && name && grade && date_joined && subject) {
         let res = this.traineeService.addTrainee(this.traineeForm.value);
-        if(res){
-          this.dataSource2 = [...this.traineeService.ELEMENT_DATA]
+        if (res) {
+          this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
           this.table.renderRows();
           this.traineeForm.reset();
         }
       }
     }
   }
-  chooseRow(row:any){
+  chooseRow(row: any) {
     this.showDetails = !this.showDetails;
     this.gridChecked = !this.gridChecked;
-    if(this.showDetails && this.gridChecked){
+    if (this.showDetails && this.gridChecked) {
       this.traineeForm.patchValue(row);
-
     }
   }
   removeTrainee() {
-    const {id} = this.traineeForm.value;
-    if(id){
+    const { id } = this.traineeForm.value;
+    if (id) {
       this.traineeService.removeTrainee(id);
-      this.dataSource2 = [...this.traineeService.ELEMENT_DATA]
+      this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
       this.table.renderRows();
       this.traineeForm.reset();
       this.showDetails = false;
