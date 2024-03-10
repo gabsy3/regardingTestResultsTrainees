@@ -123,7 +123,20 @@ export class DataComponent implements AfterViewInit {
     }
     if (this.showDetails && this.gridChecked) {
       this.traineeForm.patchValue(row);
+      
+      this.traineeForm.get('date_joined')?.patchValue(this.formatDate(row.date_joined));
     }
+  }
+
+  private formatDate(date:any) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    const newDate = [year, month, day].join('-');
+    return [year, day,month].join('-');
   }
 
   removeTrainee() {
