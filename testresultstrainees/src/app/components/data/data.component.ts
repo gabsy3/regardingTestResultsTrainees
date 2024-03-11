@@ -134,8 +134,8 @@ export class DataComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  chooseRow(row: any , index:any) {
-    this.currentRowID = index;
+  chooseRow(row: any) {
+    this.currentRowID = row.id;
     if (row.id === this.traineeForm.value.id) {
       this.showDetails = !this.showDetails;
       this.gridChecked = !this.gridChecked;
