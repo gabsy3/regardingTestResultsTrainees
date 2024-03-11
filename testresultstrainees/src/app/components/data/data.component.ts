@@ -59,6 +59,7 @@ export class DataComponent implements AfterViewInit {
   gridChecked: boolean = false;
   clickedRows = new Set<trainee>();
   filterBy: string = '';
+  currentRowID:string ="";
 
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
@@ -110,9 +111,13 @@ export class DataComponent implements AfterViewInit {
     }
   }
   chooseRow(row: any) {
+    this.currentRowID = row.id;
     if (row.id === this.traineeForm.value.id) {
       this.showDetails = !this.showDetails;
       this.gridChecked = !this.gridChecked;
+      if(!this.showDetails && !this.gridChecked){
+        this.currentRowID ="";
+      }
     } else {
       this.traineeForm.reset();
       this.showDetails = true;
