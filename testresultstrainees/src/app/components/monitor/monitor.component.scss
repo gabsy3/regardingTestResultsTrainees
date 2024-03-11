@@ -1,0 +1,13 @@
+:host {
+    >.row {
+        justify-content: center;
+        display: flex;
+        padding: 10px 0px;
+    }
+
+    mat-select,
+    mat-form-field {
+        max-width: 500px;
+        width: 100%;
+    }
+}
