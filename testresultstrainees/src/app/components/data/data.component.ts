@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatTableModule,
@@ -33,7 +33,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements OnInit, AfterViewInit  {
+export class DataComponent implements AfterViewInit  {
   traineeService = inject(TraineeService);
   displayedColumns: string[] = [
     'id',
@@ -68,11 +68,6 @@ export class DataComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
 
-  ngOnInit(){
-    this.dataSource.filterPredicate = function(data, filter: string): boolean {
-      return data.name.toLowerCase().includes(filter);
-    };
-  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -105,7 +100,6 @@ export class DataComponent implements OnInit, AfterViewInit  {
           );
           if (updateResult) {
             this.dataSource.data = this.traineeService.ELEMENT_DATA;
-            this.table.renderRows();
           }
         }
         if (this.showDetails && !this.gridChecked) {
@@ -159,17 +153,27 @@ export class DataComponent implements OnInit, AfterViewInit  {
     }
   }
   applyFilter() {
+    // this.filterBy = this.filterBy.trim();
+    // this.filterBy = this.filterBy;
+    // console.log(this.filterBy);
     // const filterBy = this.filterBy.split(':')[0];
-    // const filter = this.filterBy.split(':')[1];
-    // if(filterBy && filter){
-    //   this.dataSource.filterPredicate = function (data, filter: string): boolean {
-    //     return data.filterBy.toLowerCase().includes(filter);
-    //   };
+    // const filterVal = this.filterBy.split(':')[1];
+    // console.log(filterBy,filterVal);
+    // if(filterBy && filterVal){
+    //   this.dataSource.filter = filterVal;
     // }
-    
-    this.filterBy = this.filterBy.trim(); // Remove whitespace
-    this.filterBy = this.filterBy.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = this.filterBy;
-    this.table.renderRows();
+    // this.dataSource.filterPredicate = function(data, filter: string): boolean {
+    //   return data.filterBy?.includes(filter);
+    // };
+
+    this.filterBy = this.filterBy.trim();
+    const filterBy = this.filterBy.split(':')[0];
+    const filterVal = this.filterBy.split(':')[1];
+    this.dataSource.data.map(data => data.filterBy = filterBy)
+    this.dataSource.filter = filterVal;
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      let column = data.filterBy.toLowerCase();
+      return data[column]?.includes(filter);
+    };
   }
 }

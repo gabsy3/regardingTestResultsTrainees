@@ -1,10 +1,11 @@
 export interface trainee {
+  [x: string]: any;
   filterBy?: any;
   id: string;
   name: string;
-  grade: number;
+  grade: string;
   email?:string;
-  date_joined: string;
+  date: string;
   address?:string;
   city?:string;
   country?:string;
