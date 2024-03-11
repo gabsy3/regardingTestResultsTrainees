@@ -37,7 +37,7 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="chooseRow(row)" [class.row-clicked]="row.id === currentRowID"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="chooseRow(row,i)" [class.row-clicked]="row.id === currentRowID"></tr>
             </table>
             <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
         </div>
