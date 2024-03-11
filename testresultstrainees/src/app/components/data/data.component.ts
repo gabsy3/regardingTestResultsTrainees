@@ -59,7 +59,7 @@ export class DataComponent implements AfterViewInit {
   gridChecked: boolean = false;
   clickedRows = new Set<trainee>();
   filterBy: string = '';
-  currentRowID:string ="";
+  currentRowID: string = '';
 
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
@@ -99,13 +99,11 @@ export class DataComponent implements AfterViewInit {
           }
         }
         if (this.showDetails && !this.gridChecked) {
-          let addResult = this.traineeService.addTrainee(
+          this.traineeService.addTrainee(
             this.traineeForm.value
           );
-          if (addResult) {
-            this.dataSource.data = this.traineeService.ELEMENT_DATA;
-            this.traineeForm.reset();
-          }
+          this.dataSource.data = this.traineeService.ELEMENT_DATA;
+          this.traineeForm.reset();
         }
       }
     }
@@ -115,8 +113,8 @@ export class DataComponent implements AfterViewInit {
     if (row.id === this.traineeForm.value.id) {
       this.showDetails = !this.showDetails;
       this.gridChecked = !this.gridChecked;
-      if(!this.showDetails && !this.gridChecked){
-        this.currentRowID ="";
+      if (!this.showDetails && !this.gridChecked) {
+        this.currentRowID = '';
       }
     } else {
       this.traineeForm.reset();
