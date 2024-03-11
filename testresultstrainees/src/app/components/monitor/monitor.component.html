@@ -48,7 +48,7 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.aboveAvg]="row.average > 65" [class.belowAvg]="row.average <=65"></tr>
         </table>
         </div>
     </div>
