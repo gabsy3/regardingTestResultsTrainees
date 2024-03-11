@@ -32,7 +32,13 @@ export class MonitorComponent implements OnInit{
     passed: false,
     failed: false,
   });
+  uniqueDataSource: trainee[] = [];
 
   ngOnInit(): void {
+    const mapFromDataSource = new Map(
+      this.traineeService.ELEMENT_DATA.map(c => [c.id, c])
+    );
+    
+  this.uniqueDataSource = [...mapFromDataSource.values()];
   }
 }
