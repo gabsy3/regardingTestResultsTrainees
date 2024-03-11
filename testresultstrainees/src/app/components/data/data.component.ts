@@ -77,6 +77,7 @@ export class DataComponent implements AfterViewInit, OnInit {
       const sum = this.sumOfId(obj[item].id);
       this.dataSource.data[item].sum = sum;
       this.dataSource.data[item].exams = this.count;
+      this.dataSource.data[item].average = sum / this.count;
     }
     console.log(this.dataSource.data);
   }
