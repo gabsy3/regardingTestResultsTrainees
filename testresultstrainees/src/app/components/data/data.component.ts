@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatTableModule,
@@ -33,7 +33,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements AfterViewInit {
+export class DataComponent implements OnInit, AfterViewInit  {
   traineeService = inject(TraineeService);
   displayedColumns: string[] = [
     'id',
@@ -45,7 +45,6 @@ export class DataComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
-  dataSource2  = [...this.traineeService.ELEMENT_DATA];
   showDetails: boolean = false;
   traineeForm = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -69,6 +68,11 @@ export class DataComponent implements AfterViewInit {
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
 
+  ngOnInit(){
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      return data.name.toLowerCase().includes(filter);
+    };
+  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -100,7 +104,7 @@ export class DataComponent implements AfterViewInit {
             this.traineeForm.value
           );
           if (updateResult) {
-            this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
+            this.dataSource.data = this.traineeService.ELEMENT_DATA;
             this.table.renderRows();
           }
         }
@@ -109,8 +113,7 @@ export class DataComponent implements AfterViewInit {
             this.traineeForm.value
           );
           if (addResult) {
-            this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
-            this.table.renderRows();
+            this.dataSource.data = this.traineeService.ELEMENT_DATA;
             this.traineeForm.reset();
           }
         }
@@ -149,20 +152,24 @@ export class DataComponent implements AfterViewInit {
     const { id } = this.traineeForm.value;
     if (id) {
       this.traineeService.removeTrainee(id);
-      this.dataSource2 = [...this.traineeService.ELEMENT_DATA];
-      this.table.renderRows();
+      this.dataSource.data = this.traineeService.ELEMENT_DATA;
       this.traineeForm.reset();
       this.showDetails = false;
       this.gridChecked = false;
     }
   }
   applyFilter() {
-    const filterBy = this.filterBy.split(':')[0];
-    const filter = this.filterBy.split(':')[1];
-    if(filterBy && filter){
-      this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.filterBy.toLowerCase().includes(filter);
-      };
-    }
+    // const filterBy = this.filterBy.split(':')[0];
+    // const filter = this.filterBy.split(':')[1];
+    // if(filterBy && filter){
+    //   this.dataSource.filterPredicate = function (data, filter: string): boolean {
+    //     return data.filterBy.toLowerCase().includes(filter);
+    //   };
+    // }
+    
+    this.filterBy = this.filterBy.trim(); // Remove whitespace
+    this.filterBy = this.filterBy.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = this.filterBy;
+    this.table.renderRows();
   }
 }
