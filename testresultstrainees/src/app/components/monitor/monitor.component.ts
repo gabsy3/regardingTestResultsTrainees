@@ -18,7 +18,8 @@ export class MonitorComponent {
   traineeService = inject(TraineeService);
   formBuilder = inject(FormBuilder);
   IDs = new FormControl('');
-  IDsList = this.traineeService.ELEMENT_DATA.map(data => data.id);
+  IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(data => data.id);
+  IDsList = this.IDsListDuplicate.filter((item , index )=> this.IDsListDuplicate.indexOf(item) === index)
   names = new FormControl('');
   state = this.formBuilder.group({
     passed: false,
