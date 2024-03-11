@@ -11,4 +11,6 @@ export interface trainee {
   country?:string;
   zip?:string;
   subject: string;
+  average?:number;
+  exams?:number;
 }
