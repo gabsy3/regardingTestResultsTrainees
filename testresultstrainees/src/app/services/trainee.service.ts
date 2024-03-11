@@ -6,6 +6,7 @@ import { trainee } from '../models/data.model';
 })
 export class TraineeService {
   constructor() {}
+  studentIdNumber:number =3;
   ELEMENT_DATA: trainee[] = [
     {
       id: '1',
@@ -13,6 +14,7 @@ export class TraineeService {
       date: '30-01-2024',
       grade: '80',
       subject: 'Algebra',
+      studentId:'1',
     },
     {
       id: '2',
@@ -20,6 +22,7 @@ export class TraineeService {
       date: '08-03-2024',
       grade: '85',
       subject: 'History',
+      studentId:'2',
     },
     {
       id: '3',
@@ -27,61 +30,84 @@ export class TraineeService {
       date: '10-02-2024',
       grade: '10',
       subject: 'Algebra',
+      studentId:'3',
     },
+    
     {
       id: '4',
-      name: 'Beryllium',
+      name: 'Gabi',
       date: '10-03-2024',
       grade: '30',
       subject: 'History',
+      studentId:'1',
     },
     {
       id: '5',
-      name: 'Boron',
+      name: 'Maly',
       date: '12-05-2023',
       grade: '65',
       subject: 'Algebra',
+      studentId:'2',
     },
     {
       id: '6',
-      name: 'Carbon',
+      name: 'Yossi',
       date: '10-03-2023',
       grade: '87',
       subject: 'History',
+      studentId:'3',
     },
     {
       id: '7',
-      name: 'Nitrogen',
+      name: 'Maly',
       date: '10-01-2024',
       grade: '77',
       subject: 'Algebra',
+      studentId:'2',
     },
     {
       id: '8',
-      name: 'Oxygen',
+      name: 'Yossi',
       date: '10-03-2024',
       grade: '90',
       subject: 'History',
+      studentId:'3',
     },
     {
       id: '9',
-      name: 'Fluorine',
+      name: 'Gabi',
       date: '10-03-2024',
       grade: '55',
       subject: 'Algebra',
+      studentId:'1',
     },
     {
       id: '10',
-      name: 'Neon',
+      name: 'Gabi',
       date: '10-03-2024',
       grade: '80',
       subject: 'History',
+      studentId:'1',
     },
   ];
   addTrainee(formValue: any) {
     let { id, name, grade, email, date, address, city, country, zip, subject } = formValue;
     date = this.formatDateUpdate(date);
-    this.ELEMENT_DATA.push({ id, name, grade, email, date, address, city, country, zip, subject });
+    let studentId="";
+    const index = this.ELEMENT_DATA.findIndex(item => item.id === id)
+    const stuId = this.ELEMENT_DATA.find(stid => stid.name === name);
+    if(stuId){
+      studentId = stuId.studentId;
+    }
+    else{
+      this.studentIdNumber++;
+      studentId = String(this.studentIdNumber);
+    }
+    if(index >= 0){
+      return false;
+    }
+    this.ELEMENT_DATA.push({ id, name, grade, email, date, address, city, country, zip, subject ,studentId });
+    return true;
   }
   removeTrainee(id: string) {
     const traineeIndex = this.ELEMENT_DATA.findIndex(
@@ -90,7 +116,7 @@ export class TraineeService {
     this.ELEMENT_DATA.splice(traineeIndex, 1);
   }
   updateTrainee(formValue: any) {
-    let { id, name, grade, email, date, address, city, country, zip, subject } =
+    let { id, name, grade, email, date, address, city, country, zip, subject , studentId } =
       formValue;
     const findTrainee = this.ELEMENT_DATA.findIndex(
       (trainee) => trainee.id === id
@@ -108,6 +134,7 @@ export class TraineeService {
         country,
         zip,
         subject,
+        studentId,
       };
       return true;
     }

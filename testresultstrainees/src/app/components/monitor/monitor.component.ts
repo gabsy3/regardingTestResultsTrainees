@@ -24,7 +24,7 @@ export class MonitorComponent implements OnInit{
   IDs = new FormControl('');
   IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(data => data.id);
   IDsList = this.IDsListDuplicate.filter((item , index )=> this.IDsListDuplicate.indexOf(item) === index);
-  displayedColumns: string[] = ['id', 'name', 'average', 'exams'];
+  displayedColumns: string[] = ['studentId', 'name', 'average', 'exams'];
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );  
@@ -38,7 +38,7 @@ export class MonitorComponent implements OnInit{
 
   ngOnInit(): void {
     const mapFromDataSource = new Map(
-      this.traineeService.ELEMENT_DATA.map(c => [c.id, c])
+      this.traineeService.ELEMENT_DATA.map(c => [c.name, c])
     );
   this.uniqueDataSource = [...mapFromDataSource.values()];
   this.datauniqueDataSource = this.uniqueDataSource;

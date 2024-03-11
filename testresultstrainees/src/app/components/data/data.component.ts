@@ -74,21 +74,20 @@ export class DataComponent implements AfterViewInit, OnInit {
     let obj = this.dataSource.data;
     for (let item in obj) {
       this.count = 0;
-      const sum = this.sumOfId(obj[item].id);
+      const sum = this.sumOfNames(obj[item].name);
       this.dataSource.data[item].sum = sum;
       this.dataSource.data[item].exams = this.count;
       this.dataSource.data[item].average = sum / this.count;
     }
-    console.log(this.dataSource.data);
   }
 
-  sumOfId = (id: any) =>
+  sumOfNames = (name: any) =>
     this.dataSource.data
       .filter((i) => {
-        if(i.id === id){
+        if(i.name === name){
           this.count++;
         }
-        return i.id === id;
+        return i.name === name;
       })
       .reduce((a, b) => a + +b.grade, 0);
 
@@ -127,7 +126,10 @@ export class DataComponent implements AfterViewInit, OnInit {
           }
         }
         if (this.showDetails && !this.gridChecked) {
-          this.traineeService.addTrainee(this.traineeForm.value);
+          const added = this.traineeService.addTrainee(this.traineeForm.value);
+          if(!added){
+            return;
+          }
           this.dataSource.data = this.traineeService.ELEMENT_DATA;
           this.traineeForm.reset();
         }

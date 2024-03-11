@@ -2,6 +2,7 @@ export interface trainee {
   [x: string]: any;
   filterBy?: any;
   id: string;
+  studentId:string;
   name: string;
   grade: string;
   email?:string;
