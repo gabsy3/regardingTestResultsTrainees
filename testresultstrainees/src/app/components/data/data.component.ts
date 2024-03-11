@@ -166,16 +166,28 @@ export class DataComponent implements AfterViewInit  {
     this.dataSource.data.map(data => data.filterBy = filterBy)
     this.dataSource.filter = filterVal;
 
-    if(operationGrather && (filterBy === "grade" || filterBy === "date")){
+    if(operationGrather && filterBy === "grade"){
       this.dataSource.filterPredicate = function(data, filter: string): boolean {
         let column = data.filterBy.toLowerCase();
         return +data[column] > + filter;
       };
     }
-    else if(operationLower && (filterBy === "grade" || filterBy === "date")){
+    else if(operationLower && filterBy === "grade"){
       this.dataSource.filterPredicate = function(data, filter: string): boolean {
         let column = data.filterBy.toLowerCase();
         return +data[column] < + filter;
+      };
+    }
+    else if(operationGrather && filterBy === "date"){
+      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+        let column = data.filterBy.toLowerCase();
+        return new Date(data[column]) > new Date(filter);
+      };
+    }
+    else if(operationLower && filterBy === "date"){
+      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+        let column = data.filterBy.toLowerCase();
+        return new Date(data[column]) < new Date(filter);
       };
     }
     else{
