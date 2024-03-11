@@ -13,4 +13,5 @@ export interface trainee {
   subject: string;
   average?:number;
   exams?:number;
+  sum?:number;
 }

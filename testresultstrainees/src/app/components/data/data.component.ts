@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatTableModule,
@@ -33,7 +33,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements AfterViewInit {
+export class DataComponent implements AfterViewInit , OnInit {
   traineeService = inject(TraineeService);
   date = new FormControl(new Date(''));
   displayedColumns: string[] = ['id', 'name', 'date', 'grade', 'subject'];
@@ -63,6 +63,15 @@ export class DataComponent implements AfterViewInit {
 
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
+
+  ngOnInit(): void {
+    let obj = this.dataSource.data;
+    for(let item in obj){
+      const sum = this.sumOfId(obj[item].id);
+      this.dataSource.data[item].sum =sum;
+    }
+  }
+  sumOfId = (id:any) => this.dataSource.data.filter(i => i.id === id).reduce((a, b) => a + +b.grade, 0);
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
