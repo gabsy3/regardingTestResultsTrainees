@@ -79,9 +79,9 @@ export class TraineeService {
     },
   ];
   addTrainee(formValue: any) {
-    let { id, name, grade, date, subject } = formValue;
+    let { id, name, grade, email, date, address, city, country, zip, subject } = formValue;
     date = this.formatDateUpdate(date);
-    this.ELEMENT_DATA.push({ id, name, grade, date, subject });
+    this.ELEMENT_DATA.push({ id, name, grade, email, date, address, city, country, zip, subject });
   }
   removeTrainee(id: string) {
     const traineeIndex = this.ELEMENT_DATA.findIndex(
