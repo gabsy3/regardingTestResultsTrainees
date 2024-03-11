@@ -10,7 +10,7 @@ export class TraineeService {
     {
       id: '1',
       name: 'Gabi',
-      date: '01-03-2024',
+      date: '30-01-2024',
       grade: "80",
       subject: 'Algebra',
     },
@@ -79,9 +79,10 @@ export class TraineeService {
     },
   ];
   addTrainee(formValue: any) {
-    const { id, name, grade, date, subject } = formValue;
+    let { id, name, grade, date, subject } = formValue;
     const findTrainee = this.ELEMENT_DATA.some((trainee) => trainee.id === id);
     if (!findTrainee) {
+      date = this.formatDateUpdate(date);
       this.ELEMENT_DATA.push({ id, name, grade, date, subject });
       return true;
     }
@@ -94,12 +95,33 @@ export class TraineeService {
     this.ELEMENT_DATA.splice(traineeIndex, 1);
   }
   updateTrainee(formValue: any) {
-    const {id,name,grade,email,date,address,city,country,zip,subject} = formValue;
+    let {id,name,grade,email,date,address,city,country,zip,subject} = formValue;
     const findTrainee = this.ELEMENT_DATA.findIndex((trainee) => trainee.id === id);
     if (findTrainee > -1 ) {
+      date = this.formatDateUpdate(date);
       this.ELEMENT_DATA[findTrainee] = { id, name, grade ,email , date, address , city,country,zip, subject };
       return true;
     }
     return false;
+  }
+  formatDate(date: any) {
+    date = date.split("-");
+    const stringDate = date[2] + "-" + date[1] + "-" + date[0];
+    const d = new Date(stringDate);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+  }
+  formatDateUpdate(date: any) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [day, month,year].join('-');
   }
 }

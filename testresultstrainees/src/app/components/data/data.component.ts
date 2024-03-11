@@ -33,16 +33,10 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements AfterViewInit  {
+export class DataComponent implements AfterViewInit {
   traineeService = inject(TraineeService);
   date = new FormControl(new Date(''));
-  displayedColumns: string[] = [
-    'id',
-    'name',
-    'date',
-    'grade',
-    'subject',
-  ];
+  displayedColumns: string[] = ['id', 'name', 'date', 'grade', 'subject'];
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
@@ -126,21 +120,9 @@ export class DataComponent implements AfterViewInit  {
     }
     if (this.showDetails && this.gridChecked) {
       this.traineeForm.patchValue(row);
-      //this.date.patchValue(new Date(row.date));
-      this.traineeForm
-        .get('date')
-        ?.patchValue(this.formatDate(row.date));
+      const dateFormated = this.traineeService.formatDate(row.date);
+      this.traineeForm.get('date')?.patchValue(dateFormated);
     }
-  }
-
-  private formatDate(date: any) {
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [year, day, month].join('-');
   }
 
   removeTrainee() {
@@ -157,42 +139,53 @@ export class DataComponent implements AfterViewInit  {
     this.filterBy = this.filterBy.trim();
     const filterBy = this.filterBy.split(':')[0];
     let filterVal = this.filterBy.split(':')[1];
-    const operationGrather = filterVal?.includes(">");
-    const operationLower = filterVal?.includes("<");
-    let operation = "";
-    if(operationGrather || operationLower){
-      operation = filterVal.substring(0,1);
-      filterVal = filterVal.substring(1,filterVal.length)
+    const operationGrather = filterVal?.includes('>');
+    const operationLower = filterVal?.includes('<');
+    let operation = '';
+    if (operationGrather || operationLower) {
+      operation = filterVal.substring(0, 1);
+      filterVal = filterVal.substring(1, filterVal.length);
     }
-    this.dataSource.data.map(data => data.filterBy = filterBy)
+    this.dataSource.data.map((data) => (data.filterBy = filterBy));
     this.dataSource.filter = filterVal;
 
-    if(operationGrather && filterBy === "grade"){
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+    if (operationGrather && filterBy === 'grade') {
+      this.dataSource.filterPredicate = function (
+        data,
+        filter: string
+      ): boolean {
         let column = data.filterBy.toLowerCase();
-        return +data[column] > + filter;
+        return +data[column] > +filter;
       };
-    }
-    else if(operationLower && filterBy === "grade"){
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+    } else if (operationLower && filterBy === 'grade') {
+      this.dataSource.filterPredicate = function (
+        data,
+        filter: string
+      ): boolean {
         let column = data.filterBy.toLowerCase();
-        return +data[column] < + filter;
+        return +data[column] < +filter;
       };
-    }
-    else if(operationGrather && filterBy === "date"){
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+    } else if (operationGrather && filterBy === 'date') {
+      this.dataSource.filterPredicate = function (
+        data,
+        filter: string
+      ): boolean {
         let column = data.filterBy.toLowerCase();
         return new Date(data[column]) > new Date(filter);
       };
-    }
-    else if(operationLower && filterBy === "date"){
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+    } else if (operationLower && filterBy === 'date') {
+      this.dataSource.filterPredicate = function (
+        data,
+        filter: string
+      ): boolean {
         let column = data.filterBy.toLowerCase();
         return new Date(data[column]) < new Date(filter);
       };
-    }
-    else{
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+    } else {
+      this.dataSource.filterPredicate = function (
+        data,
+        filter: string
+      ): boolean {
         let column = data.filterBy.toLowerCase();
         return data[column]?.includes(filter);
       };
