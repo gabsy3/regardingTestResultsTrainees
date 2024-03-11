@@ -18,8 +18,8 @@
         </div>
         <div class="col-12">
             <section class="d-flex" [formGroup]="state">
-                <p><mat-checkbox formControlName="passed">Passed</mat-checkbox></p>
-                <p><mat-checkbox formControlName="failed">Failed</mat-checkbox></p>
+                <p><mat-checkbox formControlName="passed" (change)="filterByCheckbox()">Passed</mat-checkbox></p>
+                <p><mat-checkbox formControlName="failed" (change)="filterByCheckbox()">Failed</mat-checkbox></p>
               </section>
         </div>
     </div>

@@ -7,12 +7,13 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { trainee } from '../../models/data.model';
+import {JsonPipe} from '@angular/common';
 
 
 @Component({
   selector: 'app-monitor',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule,MatCheckboxModule,MatInputModule,MatTableModule],
+  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule,MatCheckboxModule,MatInputModule,MatTableModule,JsonPipe],
   templateUrl: './monitor.component.html',
   styleUrl: './monitor.component.scss'
 })
@@ -29,16 +30,34 @@ export class MonitorComponent implements OnInit{
   );  
   names = new FormControl('');
   state = this.formBuilder.group({
-    passed: false,
-    failed: false,
+    passed: true,
+    failed: true,
   });
   uniqueDataSource: trainee[] = [];
+  datauniqueDataSource: trainee[] = [];
 
   ngOnInit(): void {
     const mapFromDataSource = new Map(
       this.traineeService.ELEMENT_DATA.map(c => [c.id, c])
     );
-    
   this.uniqueDataSource = [...mapFromDataSource.values()];
+  this.datauniqueDataSource = this.uniqueDataSource;
+  }
+  filterByCheckbox(){
+    const passed = this.state.value.passed;
+    const failed = this.state.value.failed;
+    this.uniqueDataSource = this.datauniqueDataSource;
+    if(passed && !failed){
+      this.uniqueDataSource = this.uniqueDataSource.filter((item:any) => item.average > 65)
+    }
+    else if(!passed && failed){
+      this.uniqueDataSource = this.uniqueDataSource.filter((item:any) => item.average < 65)
+    }
+    else if(passed && failed){
+      this.uniqueDataSource = this.datauniqueDataSource = this.uniqueDataSource;;
+    }
+    else{
+      this.uniqueDataSource = [];
+    }
   }
 }
