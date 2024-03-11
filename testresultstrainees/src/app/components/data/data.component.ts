@@ -17,10 +17,14 @@ import {
 } from '@angular/forms';
 import { TraineeService } from '../../services/trainee.service';
 import { DatePipe } from '@angular/common';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 @Component({
   selector: 'app-data',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     MatButtonModule,
     MatTableModule,
@@ -29,16 +33,18 @@ import { DatePipe } from '@angular/common';
     ReactiveFormsModule,
     DatePipe,
     FormsModule,
+    MatDatepickerModule,
   ],
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
 export class DataComponent implements AfterViewInit  {
   traineeService = inject(TraineeService);
+  date = new FormControl(new Date(''));
   displayedColumns: string[] = [
     'id',
     'name',
-    'date_joined',
+    'date',
     'grade',
     'subject',
   ];
@@ -51,7 +57,7 @@ export class DataComponent implements AfterViewInit  {
     name: new FormControl('', Validators.required),
     grade: new FormControl('', Validators.required),
     email: new FormControl(''),
-    date_joined: new FormControl('', Validators.required),
+    date: new FormControl('', Validators.required),
     address: new FormControl(''),
     city: new FormControl(''),
     country: new FormControl(''),
@@ -77,7 +83,7 @@ export class DataComponent implements AfterViewInit  {
       name: '',
       grade: '',
       email: '',
-      date_joined: '',
+      date: '',
       address: '',
       city: '',
       country: '',
@@ -92,8 +98,8 @@ export class DataComponent implements AfterViewInit  {
   }
   saveTrainee() {
     if (this.traineeForm.status === 'VALID') {
-      const { id, name, grade, date_joined, subject } = this.traineeForm.value;
-      if (id && name && grade && date_joined && subject) {
+      const { id, name, grade, date, subject } = this.traineeForm.value;
+      if (id && name && grade && date && subject) {
         if (this.showDetails && this.gridChecked) {
           let updateResult = this.traineeService.updateTrainee(
             this.traineeForm.value
@@ -125,10 +131,10 @@ export class DataComponent implements AfterViewInit  {
     }
     if (this.showDetails && this.gridChecked) {
       this.traineeForm.patchValue(row);
-
+      //this.date.patchValue(new Date(row.date));
       this.traineeForm
-        .get('date_joined')
-        ?.patchValue(this.formatDate(row.date_joined));
+        .get('date')
+        ?.patchValue(this.formatDate(row.date));
     }
   }
 
