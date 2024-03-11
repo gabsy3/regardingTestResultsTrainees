@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatTableModule,
@@ -33,7 +39,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements AfterViewInit , OnInit {
+export class DataComponent implements AfterViewInit, OnInit {
   traineeService = inject(TraineeService);
   date = new FormControl(new Date(''));
   displayedColumns: string[] = ['id', 'name', 'date', 'grade', 'subject'];
@@ -60,18 +66,30 @@ export class DataComponent implements AfterViewInit , OnInit {
   clickedRows = new Set<trainee>();
   filterBy: string = '';
   currentRowID: string = '';
-
+  count = 0;
   @ViewChild(MatTable)
   table!: MatTable<trainee>;
 
   ngOnInit(): void {
     let obj = this.dataSource.data;
-    for(let item in obj){
+    for (let item in obj) {
+      this.count = 0;
       const sum = this.sumOfId(obj[item].id);
-      this.dataSource.data[item].sum =sum;
+      this.dataSource.data[item].sum = sum;
+      this.dataSource.data[item].exams = this.count;
     }
+    console.log(this.dataSource.data);
   }
-  sumOfId = (id:any) => this.dataSource.data.filter(i => i.id === id).reduce((a, b) => a + +b.grade, 0);
+
+  sumOfId = (id: any) =>
+    this.dataSource.data
+      .filter((i) => {
+        if(i.id === id){
+          this.count++;
+        }
+        return i.id === id;
+      })
+      .reduce((a, b) => a + +b.grade, 0);
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -108,9 +126,7 @@ export class DataComponent implements AfterViewInit , OnInit {
           }
         }
         if (this.showDetails && !this.gridChecked) {
-          this.traineeService.addTrainee(
-            this.traineeForm.value
-          );
+          this.traineeService.addTrainee(this.traineeForm.value);
           this.dataSource.data = this.traineeService.ELEMENT_DATA;
           this.traineeForm.reset();
         }
