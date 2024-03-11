@@ -17,14 +17,10 @@ import {
 } from '@angular/forms';
 import { TraineeService } from '../../services/trainee.service';
 import { DatePipe } from '@angular/common';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-
 
 @Component({
   selector: 'app-data',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
   imports: [
     MatButtonModule,
     MatTableModule,
@@ -33,7 +29,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ReactiveFormsModule,
     DatePipe,
     FormsModule,
-    MatDatepickerModule,
   ],
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
