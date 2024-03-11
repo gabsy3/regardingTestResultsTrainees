@@ -115,11 +115,11 @@ export class DataComponent implements AfterViewInit  {
     }
   }
   chooseRow(row: any) {
-    this.traineeForm.reset();
     if (row.id === this.traineeForm.value.id) {
       this.showDetails = !this.showDetails;
       this.gridChecked = !this.gridChecked;
     } else {
+      this.traineeForm.reset();
       this.showDetails = true;
       this.gridChecked = true;
     }
@@ -153,19 +153,6 @@ export class DataComponent implements AfterViewInit  {
     }
   }
   applyFilter() {
-    // this.filterBy = this.filterBy.trim();
-    // this.filterBy = this.filterBy;
-    // console.log(this.filterBy);
-    // const filterBy = this.filterBy.split(':')[0];
-    // const filterVal = this.filterBy.split(':')[1];
-    // console.log(filterBy,filterVal);
-    // if(filterBy && filterVal){
-    //   this.dataSource.filter = filterVal;
-    // }
-    // this.dataSource.filterPredicate = function(data, filter: string): boolean {
-    //   return data.filterBy?.includes(filter);
-    // };
-
     this.filterBy = this.filterBy.trim();
     const filterBy = this.filterBy.split(':')[0];
     const filterVal = this.filterBy.split(':')[1];
