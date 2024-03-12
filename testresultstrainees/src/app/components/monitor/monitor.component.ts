@@ -79,12 +79,15 @@ export class MonitorComponent implements OnInit {
     } else {
       this.uniqueDataSource = [];
     }
-    if (this.selected.length) {
-      this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
-        this.selected.includes(item.studentId)
-      );
-    } else {
-      this.uniqueDataSource = this.datauniqueDataSource;
-    }
+
+    this.IDs.valueChanges.subscribe((x) => {
+      if (x?.length) {
+        this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
+          this.selected.includes(item.studentId)
+        );
+      } else {
+        this.uniqueDataSource = this.datauniqueDataSource;
+      }
+    });
   }
 }
