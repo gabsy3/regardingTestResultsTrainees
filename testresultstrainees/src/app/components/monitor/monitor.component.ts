@@ -34,7 +34,7 @@ export class MonitorComponent implements OnInit {
   traineeService = inject(TraineeService);
   formBuilder = inject(FormBuilder);
   IDs = new FormControl('');
-  IDsListDuplicate = this.traineeService.ELEMENT_DATA.map((data) => data.id);
+  IDsListDuplicate = this.traineeService.ELEMENT_DATA.map((data) => data.studentId);
   IdsFilterd: any = [];
   IDsList = this.IDsListDuplicate.filter(
     (item, index) => this.IDsListDuplicate.indexOf(item) === index
