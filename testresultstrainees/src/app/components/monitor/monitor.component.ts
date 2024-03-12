@@ -34,7 +34,9 @@ export class MonitorComponent implements OnInit {
   traineeService = inject(TraineeService);
   formBuilder = inject(FormBuilder);
   IDs = new FormControl('');
-  IDsListDuplicate = this.traineeService.ELEMENT_DATA.map((data) => data.studentId);
+  IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
+    (data) => data.studentId
+  );
   IdsFilterd: any = [];
   IDsList = this.IDsListDuplicate.filter(
     (item, index) => this.IDsListDuplicate.indexOf(item) === index
@@ -50,7 +52,7 @@ export class MonitorComponent implements OnInit {
   });
   uniqueDataSource: trainee[] = [];
   datauniqueDataSource: trainee[] = [];
-  selected: any;
+  selected: any = [];
 
   ngOnInit(): void {
     const mapFromDataSource = new Map(
@@ -64,8 +66,6 @@ export class MonitorComponent implements OnInit {
     const passed = this.state.value.passed;
     const failed = this.state.value.failed;
     this.uniqueDataSource = this.datauniqueDataSource;
-    console.log(this.selected);
-
     if (passed && !failed) {
       this.uniqueDataSource = this.uniqueDataSource.filter(
         (item: any) => item.average > 65
@@ -79,12 +79,12 @@ export class MonitorComponent implements OnInit {
     } else {
       this.uniqueDataSource = [];
     }
-    if (this.selected.length >= 0) {
+    if (this.selected.length) {
       this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
         this.selected.includes(item.studentId)
       );
     } else {
-      this.uniqueDataSource = this.datauniqueDataSource = this.uniqueDataSource;
+      this.uniqueDataSource = this.datauniqueDataSource;
     }
   }
 }
