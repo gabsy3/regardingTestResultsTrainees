@@ -5,7 +5,8 @@ import { trainee } from '../models/data.model';
   providedIn: 'root',
 })
 export class TraineeService {
-  constructor() {}
+  constructor() {
+  }
   studentIdNumber:number =3;
   ELEMENT_DATA: trainee[] = [
     {

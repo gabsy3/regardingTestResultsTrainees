@@ -71,6 +71,10 @@ export class DataComponent implements AfterViewInit, OnInit {
   table!: MatTable<trainee>;
 
   ngOnInit(): void {
+    this.avg();
+  }
+
+  avg(){
     let obj = this.dataSource.data;
     for (let item in obj) {
       this.count = 0;
@@ -80,7 +84,6 @@ export class DataComponent implements AfterViewInit, OnInit {
       this.dataSource.data[item].average = sum / this.count;
     }
   }
-
   sumOfNames = (name: any) =>
     this.dataSource.data
       .filter((i) => {
@@ -122,6 +125,7 @@ export class DataComponent implements AfterViewInit, OnInit {
             this.traineeForm.value
           );
           if (updateResult) {
+            this.avg();
             this.dataSource.data = this.traineeService.ELEMENT_DATA;
           }
         }
@@ -130,6 +134,7 @@ export class DataComponent implements AfterViewInit, OnInit {
           if(!added){
             return;
           }
+          this.avg();
           this.dataSource.data = this.traineeService.ELEMENT_DATA;
           this.traineeForm.reset();
         }
@@ -160,6 +165,7 @@ export class DataComponent implements AfterViewInit, OnInit {
     const { id } = this.traineeForm.value;
     if (id) {
       this.traineeService.removeTrainee(id);
+      this.avg();
       this.dataSource.data = this.traineeService.ELEMENT_DATA;
       this.traineeForm.reset();
       this.showDetails = false;

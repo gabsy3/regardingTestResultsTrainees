@@ -34,9 +34,7 @@ export class MonitorComponent implements OnInit {
   traineeService = inject(TraineeService);
   formBuilder = inject(FormBuilder);
   IDs = new FormControl('');
-  IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
-    (data) => data.studentId
-  );
+  IDsListDuplicate :string[] = [];
   IdsFilterd: any = [];
   IDsList = this.IDsListDuplicate.filter(
     (item, index) => this.IDsListDuplicate.indexOf(item) === index
@@ -53,10 +51,15 @@ export class MonitorComponent implements OnInit {
   uniqueDataSource: trainee[] = [];
   datauniqueDataSource: trainee[] = [];
   selected: any = [];
+  ds :any = [];
 
   ngOnInit(): void {
+    this.ds = this.traineeService.ELEMENT_DATA;
     const mapFromDataSource = new Map(
       this.traineeService.ELEMENT_DATA.map((c) => [c.name, c])
+    );
+    this.IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
+      (data) => data.studentId
     );
     this.uniqueDataSource = [...mapFromDataSource.values()];
     this.datauniqueDataSource = this.uniqueDataSource;
