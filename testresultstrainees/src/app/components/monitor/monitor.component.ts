@@ -60,9 +60,10 @@ export class MonitorComponent implements OnInit {
     );
     this.uniqueDataSource = [...mapFromDataSource.values()];
     this.datauniqueDataSource = this.uniqueDataSource;
+    this,this.filterByCheckbox();
   }
 
-  filterByCheckbox(ev: any) {
+  filterByCheckbox() {
     const passed = this.state.value.passed;
     const failed = this.state.value.failed;
     this.uniqueDataSource = this.datauniqueDataSource;
@@ -85,6 +86,14 @@ export class MonitorComponent implements OnInit {
         this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
           this.selected.includes(item.studentId)
         );
+      } else {
+        this.uniqueDataSource = this.datauniqueDataSource;
+      }
+    });
+
+    this.names.valueChanges.subscribe((x) => {
+      if (x?.length) {
+        this.uniqueDataSource = this.uniqueDataSource.filter(item => item.name.includes(x));
       } else {
         this.uniqueDataSource = this.datauniqueDataSource;
       }
