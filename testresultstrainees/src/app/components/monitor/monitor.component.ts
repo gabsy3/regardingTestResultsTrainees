@@ -60,7 +60,7 @@ export class MonitorComponent implements OnInit {
     );
     this.uniqueDataSource = [...mapFromDataSource.values()];
     this.datauniqueDataSource = this.uniqueDataSource;
-    this,this.filterByCheckbox();
+    this.filterByCheckbox();
   }
 
   filterByCheckbox() {
