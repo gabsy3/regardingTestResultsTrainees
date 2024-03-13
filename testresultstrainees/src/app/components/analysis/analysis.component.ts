@@ -32,9 +32,9 @@ export class AnalysisComponent implements OnInit {
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
   };
-  public pieChartLabels = [ [ 'Download' ], [ 'Sales' ], 'Mail' ];
+  public pieChartLabels :any = [];
   public pieChartDatasets = [ {
-    data: [ 300, 500, 100 ]
+    data: []
   } ];
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -46,11 +46,12 @@ export class AnalysisComponent implements OnInit {
   subjectListDuplicates: any = [];
   idsList: any = [];
   subjectList: any = [];
-  selectedIds = [];
+  selectedIds :any  = [];
   selectedSubject = [];
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
+  ds = this.dataSource.data;
   ngOnInit(): void {
     this.configChart();
     this.IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
@@ -67,7 +68,18 @@ export class AnalysisComponent implements OnInit {
         this.subjectListDuplicates.indexOf(item) === index
     );
   }
-  displayIdChart() {}
+  displayIdChart() {
+    let studentMarks = this.ds.filter((item: any) =>
+        this.selectedIds?.includes(item.studentId)
+    );
+    console.log(studentMarks);
+    let DuplicateSnames = studentMarks.map(item=>item.name);
+    let names = DuplicateSnames.filter(
+      (item, index) => DuplicateSnames.indexOf(item) === index
+    );
+    
+    this.pieChartLabels = names;
+  }
   displaySubjectChart() {}
   configChart() {
     
