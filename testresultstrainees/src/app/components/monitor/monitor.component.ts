@@ -55,7 +55,7 @@ export class MonitorComponent implements OnInit {
   datauniqueDataSource: trainee[] = [];
   selected: any = [];
   filterdSignal = signalState<filterd>({
-    pass:true,fail:true,name:'',ids:['']
+    pass:true,fail:true,name:'',ids:[]
   });
 
   constructor(){
@@ -69,6 +69,9 @@ export class MonitorComponent implements OnInit {
       }
       if(!this.filterdSignal.fail()){
         this.uniqueDataSource = this.uniqueDataSource.filter((item:any)=> item.average >= 65)
+      }
+      if(this.filterdSignal.ids()){
+        this.uniqueDataSource = this.uniqueDataSource.filter((item:any)=> this.selected.includes(item.studentId))
       }
     })
   }
@@ -86,16 +89,11 @@ export class MonitorComponent implements OnInit {
           ...state,
           ids:x,
         }));
-
-        // this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
-        //   this.selected.includes(item.studentId)
-        // );
       } else {
         patchState(this.filterdSignal, (state) => ({
           ...state,
           ids:[],
         }));
-        // this.uniqueDataSource = this.datauniqueDataSource;
       }
     });
   }
