@@ -2,17 +2,24 @@ export interface trainee {
   [x: string]: any;
   filterBy?: any;
   id: string;
-  studentId:string;
+  studentId: string;
   name: string;
   grade: string;
-  email?:string;
+  email?: string;
   date: string;
-  address?:string;
-  city?:string;
-  country?:string;
-  zip?:string;
+  address?: string;
+  city?: string;
+  country?: string;
+  zip?: string;
   subject: string;
-  average?:number;
-  exams?:number;
-  sum?:number;
+  average?: number;
+  exams?: number;
+  sum?: number;
+}
+
+export interface filterd {
+  pass: boolean;
+  fail: boolean;
+  name: string;
+  ids:any;
 }

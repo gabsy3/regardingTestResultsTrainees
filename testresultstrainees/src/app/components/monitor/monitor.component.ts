@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, effect, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,8 +11,10 @@ import { TraineeService } from '../../services/trainee.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { trainee } from '../../models/data.model';
+import { filterd, trainee } from '../../models/data.model';
 import { JsonPipe } from '@angular/common';
+import { signalState, patchState } from '@ngrx/signals';
+
 
 @Component({
   selector: 'app-monitor',
@@ -52,6 +54,15 @@ export class MonitorComponent implements OnInit {
   uniqueDataSource: trainee[] = [];
   datauniqueDataSource: trainee[] = [];
   selected: any = [];
+  filterdSignal = signalState<filterd>({
+    pass:true,fail:true,name:'',ids:['']
+  });
+
+  constructor(){
+    effect(()=>{
+      console.log(this.filterdSignal());
+    })
+  }
 
   ngOnInit(): void {
     const mapFromDataSource = new Map(
@@ -62,10 +73,19 @@ export class MonitorComponent implements OnInit {
     this.filterByCheckbox();
     this.IDs.valueChanges.subscribe((x) => {
       if (x?.length) {
+        patchState(this.filterdSignal, (state) => ({
+          ...state,
+          ids:x,
+        }));
+
         this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
           this.selected.includes(item.studentId)
         );
       } else {
+        patchState(this.filterdSignal, (state) => ({
+          ...state,
+          ids:[],
+        }));
         this.uniqueDataSource = this.datauniqueDataSource;
       }
     });
@@ -76,23 +96,51 @@ export class MonitorComponent implements OnInit {
     const failed = this.state.value.failed;
     this.uniqueDataSource = this.datauniqueDataSource;
     if (passed && !failed) {
+      patchState(this.filterdSignal, (state) => ({
+        ...state,
+        pass:true,
+        fail:false
+      }));
       this.uniqueDataSource = this.uniqueDataSource.filter(
         (item: any) => item.average > 65
       );
     } else if (!passed && failed) {
+      patchState(this.filterdSignal, (state) => ({
+        ...state,
+        pass:false,
+        fail:true,
+      }));
       this.uniqueDataSource = this.uniqueDataSource.filter(
         (item: any) => item.average < 65
       );
     } else if (passed && failed) {
+      patchState(this.filterdSignal, (state) => ({
+        ...state,
+        pass:true,
+        fail:true
+      }));
       this.uniqueDataSource = this.datauniqueDataSource = this.uniqueDataSource;
     } else {
+      patchState(this.filterdSignal, (state) => ({
+        ...state,
+        pass:false,
+        fail:false
+      }));
       this.uniqueDataSource = [];
     }
 
     this.names.valueChanges.subscribe((x) => {
       if (x?.length) {
+        patchState(this.filterdSignal, (state) => ({
+          ...state,
+          name:x,
+        }));
         this.uniqueDataSource = this.uniqueDataSource.filter(item => item.name.includes(x));
       } else {
+        patchState(this.filterdSignal, (state) => ({
+          ...state,
+          name:'',
+        }));
         this.uniqueDataSource = this.datauniqueDataSource;
       }
     });
