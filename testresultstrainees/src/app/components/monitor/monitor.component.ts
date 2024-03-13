@@ -34,8 +34,9 @@ export class MonitorComponent implements OnInit {
   traineeService = inject(TraineeService);
   formBuilder = inject(FormBuilder);
   IDs = new FormControl('');
-  IDsListDuplicate :string[] = [];
-  IdsFilterd: any = [];
+  IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
+    (data) => data.studentId
+  );
   IDsList = this.IDsListDuplicate.filter(
     (item, index) => this.IDsListDuplicate.indexOf(item) === index
   );
@@ -51,19 +52,23 @@ export class MonitorComponent implements OnInit {
   uniqueDataSource: trainee[] = [];
   datauniqueDataSource: trainee[] = [];
   selected: any = [];
-  ds :any = [];
 
   ngOnInit(): void {
-    this.ds = this.traineeService.ELEMENT_DATA;
     const mapFromDataSource = new Map(
       this.traineeService.ELEMENT_DATA.map((c) => [c.name, c])
-    );
-    this.IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
-      (data) => data.studentId
     );
     this.uniqueDataSource = [...mapFromDataSource.values()];
     this.datauniqueDataSource = this.uniqueDataSource;
     this.filterByCheckbox();
+    this.IDs.valueChanges.subscribe((x) => {
+      if (x?.length) {
+        this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
+          this.selected.includes(item.studentId)
+        );
+      } else {
+        this.uniqueDataSource = this.datauniqueDataSource;
+      }
+    });
   }
 
   filterByCheckbox() {
@@ -83,16 +88,6 @@ export class MonitorComponent implements OnInit {
     } else {
       this.uniqueDataSource = [];
     }
-
-    this.IDs.valueChanges.subscribe((x) => {
-      if (x?.length) {
-        this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
-          this.selected.includes(item.studentId)
-        );
-      } else {
-        this.uniqueDataSource = this.datauniqueDataSource;
-      }
-    });
 
     this.names.valueChanges.subscribe((x) => {
       if (x?.length) {
