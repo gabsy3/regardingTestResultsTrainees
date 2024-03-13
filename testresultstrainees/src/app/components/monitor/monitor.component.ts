@@ -60,8 +60,16 @@ export class MonitorComponent implements OnInit {
 
   constructor(){
     effect(()=>{
-      this.uniqueDataSource = this.datauniqueDataSource
-      this.uniqueDataSource = this.uniqueDataSource.filter(item=> item.name.includes(this.filterdSignal.name()))
+      this.uniqueDataSource = this.datauniqueDataSource;
+      if(this.filterdSignal.name()){
+        this.uniqueDataSource = this.uniqueDataSource.filter(item=> item.name.includes(this.filterdSignal.name()));
+      }
+      if(!this.filterdSignal.pass()){
+        this.uniqueDataSource = this.uniqueDataSource.filter((item:any)=> item.average < 65)
+      }
+      if(!this.filterdSignal.fail()){
+        this.uniqueDataSource = this.uniqueDataSource.filter((item:any)=> item.average >= 65)
+      }
     })
   }
 
@@ -95,39 +103,30 @@ export class MonitorComponent implements OnInit {
   filterByCheckbox() {
     const passed = this.state.value.passed;
     const failed = this.state.value.failed;
-    // this.uniqueDataSource = this.datauniqueDataSource;
     if (passed && !failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:true,
         fail:false
       }));
-      // this.uniqueDataSource = this.uniqueDataSource.filter(
-      //   (item: any) => item.average > 65
-      // );
     } else if (!passed && failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:false,
         fail:true,
       }));
-      // this.uniqueDataSource = this.uniqueDataSource.filter(
-      //   (item: any) => item.average < 65
-      // );
     } else if (passed && failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:true,
         fail:true
       }));
-      // this.uniqueDataSource = this.datauniqueDataSource = this.uniqueDataSource;
     } else {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:false,
         fail:false
       }));
-      // this.uniqueDataSource = [];
     }
 
     this.names.valueChanges.subscribe((x) => {
