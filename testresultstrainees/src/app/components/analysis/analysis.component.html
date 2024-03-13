@@ -21,4 +21,11 @@
             </mat-form-field>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets" [labels]="pieChartLabels"
+                [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+            </canvas>
+        </div>
+    </div>
 </div>
