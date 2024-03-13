@@ -60,7 +60,8 @@ export class MonitorComponent implements OnInit {
 
   constructor(){
     effect(()=>{
-      console.log(this.filterdSignal());
+      this.uniqueDataSource = this.datauniqueDataSource
+      this.uniqueDataSource = this.uniqueDataSource.filter(item=> item.name.includes(this.filterdSignal.name()))
     })
   }
 
@@ -78,15 +79,15 @@ export class MonitorComponent implements OnInit {
           ids:x,
         }));
 
-        this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
-          this.selected.includes(item.studentId)
-        );
+        // this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
+        //   this.selected.includes(item.studentId)
+        // );
       } else {
         patchState(this.filterdSignal, (state) => ({
           ...state,
           ids:[],
         }));
-        this.uniqueDataSource = this.datauniqueDataSource;
+        // this.uniqueDataSource = this.datauniqueDataSource;
       }
     });
   }
@@ -94,39 +95,39 @@ export class MonitorComponent implements OnInit {
   filterByCheckbox() {
     const passed = this.state.value.passed;
     const failed = this.state.value.failed;
-    this.uniqueDataSource = this.datauniqueDataSource;
+    // this.uniqueDataSource = this.datauniqueDataSource;
     if (passed && !failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:true,
         fail:false
       }));
-      this.uniqueDataSource = this.uniqueDataSource.filter(
-        (item: any) => item.average > 65
-      );
+      // this.uniqueDataSource = this.uniqueDataSource.filter(
+      //   (item: any) => item.average > 65
+      // );
     } else if (!passed && failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:false,
         fail:true,
       }));
-      this.uniqueDataSource = this.uniqueDataSource.filter(
-        (item: any) => item.average < 65
-      );
+      // this.uniqueDataSource = this.uniqueDataSource.filter(
+      //   (item: any) => item.average < 65
+      // );
     } else if (passed && failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:true,
         fail:true
       }));
-      this.uniqueDataSource = this.datauniqueDataSource = this.uniqueDataSource;
+      // this.uniqueDataSource = this.datauniqueDataSource = this.uniqueDataSource;
     } else {
       patchState(this.filterdSignal, (state) => ({
         ...state,
         pass:false,
         fail:false
       }));
-      this.uniqueDataSource = [];
+      // this.uniqueDataSource = [];
     }
 
     this.names.valueChanges.subscribe((x) => {
@@ -135,13 +136,11 @@ export class MonitorComponent implements OnInit {
           ...state,
           name:x,
         }));
-        this.uniqueDataSource = this.uniqueDataSource.filter(item => item.name.includes(x));
       } else {
         patchState(this.filterdSignal, (state) => ({
           ...state,
           name:'',
         }));
-        this.uniqueDataSource = this.datauniqueDataSource;
       }
     });
   }
