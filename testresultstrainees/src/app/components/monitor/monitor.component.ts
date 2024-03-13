@@ -15,7 +15,6 @@ import { filterd, trainee } from '../../models/data.model';
 import { JsonPipe } from '@angular/common';
 import { signalState, patchState } from '@ngrx/signals';
 
-
 @Component({
   selector: 'app-monitor',
   standalone: true,
@@ -55,28 +54,45 @@ export class MonitorComponent implements OnInit {
   datauniqueDataSource: trainee[] = [];
   selected: any = [];
   filterdSignal = signalState<filterd>({
-    pass:true,fail:true,name:'',ids:[]
+    pass: true,
+    fail: true,
+    name: '',
+    ids: [],
   });
 
-  constructor(){
-    effect(()=>{
+  constructor() {
+    effect(() => {
       this.uniqueDataSource = this.datauniqueDataSource;
-      if(this.filterdSignal.name()){
-        this.uniqueDataSource = this.uniqueDataSource.filter(item=> item.name.includes(this.filterdSignal.name()));
+      if (this.filterdSignal.name()) {
+        this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
+          item.name.includes(this.filterdSignal.name())
+        );
       }
-      if(!this.filterdSignal.pass()){
-        this.uniqueDataSource = this.uniqueDataSource.filter((item:any)=> item.average < 65)
+      if (!this.filterdSignal.pass()) {
+        this.uniqueDataSource = this.uniqueDataSource.filter(
+          (item: any) => item.average < 65
+        );
       }
-      if(!this.filterdSignal.fail()){
-        this.uniqueDataSource = this.uniqueDataSource.filter((item:any)=> item.average >= 65)
+      if (!this.filterdSignal.fail()) {
+        this.uniqueDataSource = this.uniqueDataSource.filter(
+          (item: any) => item.average >= 65
+        );
       }
-      if(this.filterdSignal.ids()){
-        this.uniqueDataSource = this.uniqueDataSource.filter((item:any)=> this.selected.includes(item.studentId))
+      if (this.filterdSignal.ids()) {
+        this.uniqueDataSource = this.uniqueDataSource.filter((item: any) =>
+          this.selected.includes(item.studentId)
+        );
       }
-    })
+      window.localStorage.setItem(
+        'filter',
+        JSON.stringify(this.filterdSignal())
+      );
+    });
   }
 
   ngOnInit(): void {
+    let filterStorge: any = window.localStorage.getItem('filter');
+    filterStorge = JSON.parse(filterStorge);
     const mapFromDataSource = new Map(
       this.traineeService.ELEMENT_DATA.map((c) => [c.name, c])
     );
@@ -87,15 +103,28 @@ export class MonitorComponent implements OnInit {
       if (x?.length) {
         patchState(this.filterdSignal, (state) => ({
           ...state,
-          ids:x,
+          ids: x,
         }));
       } else {
         patchState(this.filterdSignal, (state) => ({
           ...state,
-          ids:[],
+          ids: [],
         }));
       }
     });
+    if (filterStorge) {
+      this.state.patchValue({passed:filterStorge.pass,failed:filterStorge.fail})
+      this.names.patchValue(filterStorge.name)
+      this.selected = filterStorge.ids;
+     
+      patchState(this.filterdSignal, (state) => ({
+        ...state,
+        name: filterStorge.name,
+        ids: filterStorge.ids,
+        pass: filterStorge.pass,
+        fail: filterStorge.fail,
+      }));
+    }
   }
 
   filterByCheckbox() {
@@ -104,26 +133,26 @@ export class MonitorComponent implements OnInit {
     if (passed && !failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
-        pass:true,
-        fail:false
+        pass: true,
+        fail: false,
       }));
     } else if (!passed && failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
-        pass:false,
-        fail:true,
+        pass: false,
+        fail: true,
       }));
     } else if (passed && failed) {
       patchState(this.filterdSignal, (state) => ({
         ...state,
-        pass:true,
-        fail:true
+        pass: true,
+        fail: true,
       }));
     } else {
       patchState(this.filterdSignal, (state) => ({
         ...state,
-        pass:false,
-        fail:false
+        pass: false,
+        fail: false,
       }));
     }
 
@@ -131,12 +160,12 @@ export class MonitorComponent implements OnInit {
       if (x?.length) {
         patchState(this.filterdSignal, (state) => ({
           ...state,
-          name:x,
+          name: x,
         }));
       } else {
         patchState(this.filterdSignal, (state) => ({
           ...state,
-          name:'',
+          name: '',
         }));
       }
     });
