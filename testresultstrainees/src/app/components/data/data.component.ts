@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  OnChanges,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -40,7 +41,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements AfterViewInit, OnInit , OnDestroy {
+export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
   traineeService = inject(TraineeService);
   date = new FormControl(new Date(''));
   displayedColumns: string[] = ['id', 'name', 'date', 'grade', 'subject'];
@@ -74,11 +75,11 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy {
   ngOnInit(): void {
     let filterStorge: any = window.localStorage.getItem('filterData');
     filterStorge = JSON.parse(filterStorge);
+    this.avg();
     if (filterStorge) {
       this.filterBy = filterStorge;
-      this.applyFilter();
+      
     }
-    this.avg();
   }
 
   avg() {
@@ -102,6 +103,7 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy {
       .reduce((a, b) => a + +b.grade, 0);
 
   ngAfterViewInit() {
+    this.applyFilter();
     this.dataSource.paginator = this.paginator;
   }
   openTrainee() {
