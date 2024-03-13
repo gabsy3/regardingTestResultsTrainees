@@ -116,6 +116,7 @@ export class MonitorComponent implements OnInit {
       this.state.patchValue({passed:filterStorge.pass,failed:filterStorge.fail})
       this.names.patchValue(filterStorge.name)
       this.selected = filterStorge.ids;
+      this.IDs.setValue(filterStorge.ids)
      
       patchState(this.filterdSignal, (state) => ({
         ...state,
