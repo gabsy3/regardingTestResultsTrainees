@@ -103,8 +103,12 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
       .reduce((a, b) => a + +b.grade, 0);
 
   ngAfterViewInit() {
-    this.applyFilter();
-    this.dataSource.paginator = this.paginator;
+    setTimeout(() => {
+      this.applyFilter();
+      this.dataSource.paginator = this.paginator;
+    }, 0);
+    
+    
   }
   openTrainee() {
     this.traineeForm.patchValue({
