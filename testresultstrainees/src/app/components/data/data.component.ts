@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
   inject,
@@ -39,7 +40,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements AfterViewInit, OnInit {
+export class DataComponent implements AfterViewInit, OnInit , OnDestroy {
   traineeService = inject(TraineeService);
   date = new FormControl(new Date(''));
   displayedColumns: string[] = ['id', 'name', 'date', 'grade', 'subject'];
@@ -71,6 +72,12 @@ export class DataComponent implements AfterViewInit, OnInit {
   table!: MatTable<trainee>;
 
   ngOnInit(): void {
+    let filterStorge: any = window.localStorage.getItem('filterData');
+    filterStorge = JSON.parse(filterStorge);
+    if (filterStorge) {
+      this.filterBy = filterStorge;
+      this.applyFilter();
+    }
     this.avg();
   }
 
@@ -171,6 +178,12 @@ export class DataComponent implements AfterViewInit, OnInit {
       this.showDetails = false;
       this.gridChecked = false;
     }
+  }
+  ngOnDestroy(){
+    window.localStorage.setItem(
+      'filterData',
+      JSON.stringify(this.filterBy)
+    );
   }
   applyFilter() {
     this.filterBy = this.filterBy.trim();
