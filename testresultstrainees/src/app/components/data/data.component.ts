@@ -74,7 +74,7 @@ export class DataComponent implements AfterViewInit, OnInit {
     this.avg();
   }
 
-  avg(){
+  avg() {
     let obj = this.dataSource.data;
     for (let item in obj) {
       this.count = 0;
@@ -87,7 +87,7 @@ export class DataComponent implements AfterViewInit, OnInit {
   sumOfNames = (name: any) =>
     this.dataSource.data
       .filter((i) => {
-        if(i.name === name){
+        if (i.name === name) {
           this.count++;
         }
         return i.name === name;
@@ -131,7 +131,7 @@ export class DataComponent implements AfterViewInit, OnInit {
         }
         if (this.showDetails && !this.gridChecked) {
           const added = this.traineeService.addTrainee(this.traineeForm.value);
-          if(!added){
+          if (!added) {
             return;
           }
           this.avg();
