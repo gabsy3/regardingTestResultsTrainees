@@ -65,7 +65,7 @@ export class MonitorComponent implements OnInit {
       this.uniqueDataSource = this.datauniqueDataSource;
       if (this.filterdSignal.name()) {
         this.uniqueDataSource = this.uniqueDataSource.filter((item) =>
-          item.name.includes(this.filterdSignal.name())
+          item.name.toLowerCase().includes(this.filterdSignal.name().toLowerCase())
         );
       }
       if (!this.filterdSignal.pass()) {
