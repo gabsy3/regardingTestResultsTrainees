@@ -5,7 +5,8 @@
                 <mat-label>IDs</mat-label>
                 <mat-select [formControl]="IDs" multiple [(value)]="selectedIds">
                     @for (id of idsList; track id) {
-                    <mat-option [value]="id" (onSelectionChange)="displayIdChart();displayIdChart2()">{{id}}</mat-option>
+                    <mat-option [value]="id"
+                        (onSelectionChange)="displayIdChart();displayIdChart2()">{{id}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
@@ -21,23 +22,31 @@
             </mat-form-field>
         </div>
     </div>
+    @if(selectedIds.length){
     <div class="row">
         <div class="col-6">
+            <h2>Grades avarege for each student</h2>
             <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets1" [labels]="pieChartLabels1"
                 [options]="pieChartOptions1" [plugins]="pieChartPlugins1" [legend]="pieChartLegend1">
             </canvas>
         </div>
         <div class="col-6">
+            <h2>Students avareges for students</h2>
             <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets2" [labels]="pieChartLabels2"
                 [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [legend]="pieChartLegend2">
             </canvas>
         </div>
     </div>
+    }
+    @if(selectedSubject.length){
     <div class="row">
         <div class="col-12">
+            <h2>Grades avareges per subject</h2>
             <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets3" [labels]="pieChartLabels3"
                 [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [legend]="pieChartLegend3">
             </canvas>
         </div>
     </div>
+    }
+
 </div>
