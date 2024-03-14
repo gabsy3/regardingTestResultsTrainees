@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,8 +9,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { trainee } from '../../models/data.model';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-
-
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDrag,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-analysis',
@@ -27,6 +28,8 @@ import { BaseChartDirective } from 'ng2-charts';
     MatCheckboxModule,
     MatInputModule,
     BaseChartDirective,
+    CdkDropList,
+    CdkDrag,
   ],
   templateUrl: './analysis.component.html',
   styleUrl: './analysis.component.scss',
@@ -103,15 +106,15 @@ export class AnalysisComponent implements OnInit {
       (item: any, index: any) =>
         this.subjectListDuplicates.indexOf(item) === index
     );
-    if(filterStorge){
+    if (filterStorge) {
       this.selectedIds = filterStorge.selectedIds;
       this.IDs.setValue(filterStorge.selectedIds);
 
       this.selectedSubject = filterStorge.selectedSubject;
-      this.subjects.setValue(filterStorge.selectedSubject)
+      this.subjects.setValue(filterStorge.selectedSubject);
     }
   }
-  
+
   displayIdChart() {
     let studentMarks = this.ds.filter((item: any) =>
       this.selectedIds?.includes(item.studentId)
@@ -198,5 +201,20 @@ export class AnalysisComponent implements OnInit {
         selectedSubject: this.selectedSubject,
       })
     );
+  }
+
+
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 }
