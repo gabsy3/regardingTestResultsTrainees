@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterViewInit,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -65,7 +71,7 @@ export class AnalysisComponent implements OnInit {
   ];
   public pieChartLegend3 = true;
   public pieChartPlugins3 = [];
-  AvgSubject :any = [];
+  AvgSubject: any = [];
 
   traineeService = inject(TraineeService);
   IDs = new FormControl('');
@@ -81,6 +87,9 @@ export class AnalysisComponent implements OnInit {
   );
   ds = this.dataSource.data;
   ngOnInit(): void {
+    let filterStorge: any = window.localStorage.getItem('filterAnalysis');
+    filterStorge = JSON.parse(filterStorge);
+
     this.IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
       (data) => data.studentId
     );
@@ -94,7 +103,15 @@ export class AnalysisComponent implements OnInit {
       (item: any, index: any) =>
         this.subjectListDuplicates.indexOf(item) === index
     );
+    if(filterStorge){
+      this.selectedIds = filterStorge.selectedIds;
+      this.IDs.setValue(filterStorge.selectedIds);
+
+      this.selectedSubject = filterStorge.selectedSubject;
+      this.subjects.setValue(filterStorge.selectedSubject)
+    }
   }
+  
   displayIdChart() {
     let studentMarks = this.ds.filter((item: any) =>
       this.selectedIds?.includes(item.studentId)
@@ -110,6 +127,13 @@ export class AnalysisComponent implements OnInit {
     );
     let avgPerStd = std.map((item: any) => item.average);
     this.pieChartDatasets1[0].data = avgPerStd;
+    window.localStorage.setItem(
+      'filterAnalysis',
+      JSON.stringify({
+        selectedIds: this.selectedIds,
+        selectedSubject: this.selectedSubject,
+      })
+    );
   }
   displayIdChart2() {
     this.sumAvgAllStudent = 0;
@@ -133,6 +157,13 @@ export class AnalysisComponent implements OnInit {
     const avg = this.sumAvgAllStudent / avgPerStd.length;
     avgArr.push(avg);
     this.pieChartDatasets2[0].data = avgArr;
+    window.localStorage.setItem(
+      'filterAnalysis',
+      JSON.stringify({
+        selectedIds: this.selectedIds,
+        selectedSubject: this.selectedSubject,
+      })
+    );
   }
   displaySubjectChart() {
     this.AvgSubject = [];
@@ -147,11 +178,12 @@ export class AnalysisComponent implements OnInit {
     this.pieChartLabels3 = subjects;
 
     for (let i = 0; i < subjects.length; i++) {
-      
       let sum = 0;
       studentMarks.forEach((item) => {
         if (item.subject === subjects[i]) {
-          numberToDivide = studentMarks.filter(item => item.subject === subjects[i]).length;
+          numberToDivide = studentMarks.filter(
+            (item) => item.subject === subjects[i]
+          ).length;
           sum += +item.grade;
         }
       });
@@ -159,5 +191,12 @@ export class AnalysisComponent implements OnInit {
       this.AvgSubject.push(avg);
     }
     this.pieChartDatasets3[0].data = this.AvgSubject;
+    window.localStorage.setItem(
+      'filterAnalysis',
+      JSON.stringify({
+        selectedIds: this.selectedIds,
+        selectedSubject: this.selectedSubject,
+      })
+    );
   }
 }
