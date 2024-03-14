@@ -44,7 +44,7 @@ import { DatePipe } from '@angular/common';
 export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
   traineeService = inject(TraineeService);
   date = new FormControl(new Date(''));
-  displayedColumns: string[] = ['id', 'name', 'date', 'grade', 'subject'];
+  displayedColumns: string[] = ['id', 'studentId' , 'name', 'date', 'grade', 'subject'];
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
@@ -242,8 +242,8 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
         data,
         filter: string
       ): boolean {
-        let column = data.filterBy.toLowerCase();
-        return data[column].toLowerCase()?.includes(filter.toLowerCase());
+        let column = data?.filterBy?.toLowerCase();
+        return data[column]?.toLowerCase().includes(filter?.toLowerCase());
       };
     }
   }

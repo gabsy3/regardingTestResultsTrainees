@@ -15,7 +15,7 @@ export class TraineeService {
       date: '30-01-2024',
       grade: '80',
       subject: 'Algebra',
-      studentId: '1',
+      studentId: '200791291',
     },
     {
       id: '2',
@@ -23,7 +23,7 @@ export class TraineeService {
       date: '08-03-2024',
       grade: '85',
       subject: 'History',
-      studentId: '2',
+      studentId: '300111111',
     },
     {
       id: '3',
@@ -31,7 +31,7 @@ export class TraineeService {
       date: '10-02-2024',
       grade: '10',
       subject: 'Algebra',
-      studentId: '3',
+      studentId: '100123342',
     },
 
     {
@@ -40,7 +40,7 @@ export class TraineeService {
       date: '10-03-2024',
       grade: '30',
       subject: 'History',
-      studentId: '1',
+      studentId: '200791291',
     },
     {
       id: '5',
@@ -48,7 +48,7 @@ export class TraineeService {
       date: '12-05-2023',
       grade: '65',
       subject: 'Algebra',
-      studentId: '2',
+      studentId: '300111111',
     },
     {
       id: '6',
@@ -56,7 +56,7 @@ export class TraineeService {
       date: '10-03-2023',
       grade: '87',
       subject: 'History',
-      studentId: '3',
+      studentId: '100123342',
     },
     {
       id: '7',
@@ -64,7 +64,7 @@ export class TraineeService {
       date: '10-01-2024',
       grade: '77',
       subject: 'Algebra',
-      studentId: '2',
+      studentId: '300111111',
     },
     {
       id: '8',
@@ -72,7 +72,7 @@ export class TraineeService {
       date: '10-03-2024',
       grade: '90',
       subject: 'History',
-      studentId: '3',
+      studentId: '100123342',
     },
     {
       id: '9',
@@ -80,7 +80,7 @@ export class TraineeService {
       date: '10-03-2024',
       grade: '55',
       subject: 'Algebra',
-      studentId: '1',
+      studentId: '200791291',
     },
     {
       id: '10',
@@ -88,7 +88,7 @@ export class TraineeService {
       date: '10-03-2024',
       grade: '80',
       subject: 'History',
-      studentId: '1',
+      studentId: '200791291',
     },
   ];
   addTrainee(formValue: any) {
