@@ -33,8 +33,8 @@ export class AnalysisComponent implements OnInit {
     responsive: false,
   };
   public pieChartLabels :any = [];
-  public pieChartDatasets = [ {
-    data: []
+  public pieChartDatasets:any = [ {
+    data: [70,30]
   } ];
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -53,7 +53,6 @@ export class AnalysisComponent implements OnInit {
   );
   ds = this.dataSource.data;
   ngOnInit(): void {
-    this.configChart();
     this.IDsListDuplicate = this.traineeService.ELEMENT_DATA.map(
       (data) => data.studentId
     );
@@ -72,16 +71,20 @@ export class AnalysisComponent implements OnInit {
     let studentMarks = this.ds.filter((item: any) =>
         this.selectedIds?.includes(item.studentId)
     );
-    console.log(studentMarks);
+    console.log("studentsMarks",studentMarks);
     let DuplicateSnames = studentMarks.map(item=>item.name);
     let names = DuplicateSnames.filter(
       (item, index) => DuplicateSnames.indexOf(item) === index
     );
-    
     this.pieChartLabels = names;
+
+    
+    let std:any = studentMarks.filter(
+      (item, index) => names[index] === item.name
+    );
+    console.log(std);
+    let avgPerStd = std.map((item:any)=> item.average)
+    this.pieChartDatasets[0].data = avgPerStd;
   }
   displaySubjectChart() {}
-  configChart() {
-    
-  }
 }
