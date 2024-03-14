@@ -74,7 +74,7 @@ export class AnalysisComponent implements OnInit {
   idsList: any = [];
   subjectList: any = [];
   selectedIds: any = [];
-  selectedSubject = [];
+  selectedSubject:any = [];
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
@@ -133,5 +133,26 @@ export class AnalysisComponent implements OnInit {
     avgArr.push(avg)
     this.pieChartDatasets2[0].data = avgArr;
   }
-  displaySubjectChart() {}
+  displaySubjectChart() {
+    let studentMarks = this.ds.filter((item: any) => this.selectedSubject.includes(item.subject));
+    let DuplicateSSubjects = studentMarks.map((item) => item.subject);
+    let subjects = DuplicateSSubjects.filter(
+      (item, index) => DuplicateSSubjects.indexOf(item) === index
+    );
+    this.pieChartLabels3 = subjects;
+
+    let sum = 0;
+    let avgArr = [];
+    studentMarks.forEach(item=>{
+      sum += +item.grade;
+    })
+    let avg = sum / studentMarks.length;
+    avgArr.push(avg);
+    // let subjectsMarks: any = studentMarks.filter(
+    //   (item, index) => subjects[index] === item.subject
+    // );
+
+    // let avgPerStd = subjectsMarks.map((item: any) => item.average);
+    this.pieChartDatasets3[0].data = avgArr;
+  }
 }
