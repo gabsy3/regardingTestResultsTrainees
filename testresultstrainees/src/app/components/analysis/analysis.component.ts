@@ -109,10 +109,10 @@ export class AnalysisComponent implements OnInit {
     );
     let avgPerStd = std.map((item: any) => item.average);
     this.pieChartDatasets1[0].data = avgPerStd;
-    //this.pieChartDatasets[0].backgroundColor = "rgb(54, 162, 235)";
   }
   displayIdChart2() {
     this.sumAvgAllStudent = 0;
+    let avgArr = [];
     let studentMarks = this.ds.filter((item: any) =>
         this.selectedIds?.includes(item.studentId)
     );
@@ -121,8 +121,7 @@ export class AnalysisComponent implements OnInit {
       (item, index) => DuplicateSnames.indexOf(item) === index
     );
     this.pieChartLabels2 = names;
-    console.log(this.pieChartLabels2);
-
+    
     let std:any = studentMarks.filter(
       (item, index) => names[index] === item.name
     );
@@ -131,7 +130,8 @@ export class AnalysisComponent implements OnInit {
       this.sumAvgAllStudent += element;
     });
     const avg = this.sumAvgAllStudent / avgPerStd.length;
-    this.pieChartDatasets2[0].data = avg;
+    avgArr.push(avg)
+    this.pieChartDatasets2[0].data = avgArr;
   }
   displaySubjectChart() {}
 }
