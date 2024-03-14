@@ -65,6 +65,7 @@ export class AnalysisComponent implements OnInit {
   ];
   public pieChartLegend3 = true;
   public pieChartPlugins3 = [];
+  AvgSubject :any = [];
 
   traineeService = inject(TraineeService);
   IDs = new FormControl('');
@@ -74,7 +75,7 @@ export class AnalysisComponent implements OnInit {
   idsList: any = [];
   subjectList: any = [];
   selectedIds: any = [];
-  selectedSubject:any = [];
+  selectedSubject: any = [];
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
@@ -114,45 +115,49 @@ export class AnalysisComponent implements OnInit {
     this.sumAvgAllStudent = 0;
     let avgArr = [];
     let studentMarks = this.ds.filter((item: any) =>
-        this.selectedIds?.includes(item.studentId)
+      this.selectedIds?.includes(item.studentId)
     );
-    let DuplicateSnames = studentMarks.map(item=>item.name);
+    let DuplicateSnames = studentMarks.map((item) => item.name);
     let names = DuplicateSnames.filter(
       (item, index) => DuplicateSnames.indexOf(item) === index
     );
     this.pieChartLabels2 = names;
-    
-    let std:any = studentMarks.filter(
+
+    let std: any = studentMarks.filter(
       (item, index) => names[index] === item.name
     );
-    let avgPerStd = std.map((item:any)=> item.average)
-    avgPerStd.forEach((element:any) => {
+    let avgPerStd = std.map((item: any) => item.average);
+    avgPerStd.forEach((element: any) => {
       this.sumAvgAllStudent += element;
     });
     const avg = this.sumAvgAllStudent / avgPerStd.length;
-    avgArr.push(avg)
+    avgArr.push(avg);
     this.pieChartDatasets2[0].data = avgArr;
   }
   displaySubjectChart() {
-    let studentMarks = this.ds.filter((item: any) => this.selectedSubject.includes(item.subject));
+    this.AvgSubject = [];
+    let numberToDivide = 1;
+    let studentMarks = this.ds.filter((item: any) =>
+      this.selectedSubject.includes(item.subject)
+    );
     let DuplicateSSubjects = studentMarks.map((item) => item.subject);
     let subjects = DuplicateSSubjects.filter(
       (item, index) => DuplicateSSubjects.indexOf(item) === index
     );
     this.pieChartLabels3 = subjects;
 
-    let sum = 0;
-    let avgArr = [];
-    studentMarks.forEach(item=>{
-      sum += +item.grade;
-    })
-    let avg = sum / studentMarks.length;
-    avgArr.push(avg);
-    // let subjectsMarks: any = studentMarks.filter(
-    //   (item, index) => subjects[index] === item.subject
-    // );
-
-    // let avgPerStd = subjectsMarks.map((item: any) => item.average);
-    this.pieChartDatasets3[0].data = avgArr;
+    for (let i = 0; i < subjects.length; i++) {
+      
+      let sum = 0;
+      studentMarks.forEach((item) => {
+        if (item.subject === subjects[i]) {
+          numberToDivide = studentMarks.filter(item => item.subject === subjects[i]).length;
+          sum += +item.grade;
+        }
+      });
+      let avg = sum / numberToDivide;
+      this.AvgSubject.push(avg);
+    }
+    this.pieChartDatasets3[0].data = this.AvgSubject;
   }
 }
