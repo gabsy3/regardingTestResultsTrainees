@@ -1,6 +1,4 @@
 import {
-  AfterContentChecked,
-  AfterViewInit,
   Component,
   OnInit,
   inject,
@@ -15,6 +13,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { trainee } from '../../models/data.model';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+
+
 
 @Component({
   selector: 'app-analysis',
@@ -145,7 +145,7 @@ export class AnalysisComponent implements OnInit {
     let names = DuplicateSnames.filter(
       (item, index) => DuplicateSnames.indexOf(item) === index
     );
-    this.pieChartLabels2 = names;
+    this.pieChartLabels2 = [names];
 
     let std: any = studentMarks.filter(
       (item, index) => names[index] === item.name
