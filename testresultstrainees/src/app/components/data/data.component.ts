@@ -41,16 +41,24 @@ import { DatePipe } from '@angular/common';
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',
 })
-export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
+export class DataComponent implements AfterViewInit, OnInit, OnDestroy {
   traineeService = inject(TraineeService);
   date = new FormControl(new Date(''));
-  displayedColumns: string[] = ['id', 'studentId' , 'name', 'date', 'grade', 'subject'];
+  displayedColumns: string[] = [
+    'id',
+    'studentId',
+    'name',
+    'date',
+    'grade',
+    'subject',
+  ];
   dataSource = new MatTableDataSource<trainee>(
     this.traineeService.ELEMENT_DATA
   );
   showDetails: boolean = false;
   traineeForm = new FormGroup({
-    id: new FormControl('', Validators.required),
+    id: new FormControl(''),
+    studentId: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
     grade: new FormControl('', Validators.required),
     email: new FormControl(''),
@@ -78,7 +86,6 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
     this.avg();
     if (filterStorge) {
       this.filterBy = filterStorge;
-      
     }
   }
 
@@ -107,12 +114,10 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
       this.applyFilter();
       this.dataSource.paginator = this.paginator;
     }, 0);
-    
-    
   }
   openTrainee() {
     this.traineeForm.patchValue({
-      id: '',
+      studentId: '',
       name: '',
       grade: '',
       email: '',
@@ -131,16 +136,12 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
   }
   saveTrainee() {
     if (this.traineeForm.status === 'VALID') {
-      const { id, name, grade, date, subject } = this.traineeForm.value;
-      if (id && name && grade && date && subject) {
+      const { studentId, name, grade, date, subject } = this.traineeForm.value;
+      if (studentId && name && grade && date && subject) {
         if (this.showDetails && this.gridChecked) {
-          let updateResult = this.traineeService.updateTrainee(
-            this.traineeForm.value
-          );
-          if (updateResult) {
-            this.avg();
-            this.dataSource.data = this.traineeService.ELEMENT_DATA;
-          }
+          this.traineeService.updateTrainee(this.traineeForm.value);
+          this.avg();
+          this.dataSource.data = this.traineeService.ELEMENT_DATA;
         }
         if (this.showDetails && !this.gridChecked) {
           const added = this.traineeService.addTrainee(this.traineeForm.value);
@@ -185,11 +186,8 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
       this.gridChecked = false;
     }
   }
-  ngOnDestroy(){
-    window.localStorage.setItem(
-      'filterData',
-      JSON.stringify(this.filterBy)
-    );
+  ngOnDestroy() {
+    window.localStorage.setItem('filterData', JSON.stringify(this.filterBy));
   }
   applyFilter() {
     this.filterBy = this.filterBy.trim();
@@ -243,6 +241,7 @@ export class DataComponent implements AfterViewInit, OnInit , OnDestroy{
         filter: string
       ): boolean {
         let column = data?.filterBy?.toLowerCase();
+        console.log(data[column]?.toLowerCase(), filter?.toLowerCase());
         return data[column]?.toLowerCase().includes(filter?.toLowerCase());
       };
     }
