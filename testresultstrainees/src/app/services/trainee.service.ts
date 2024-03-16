@@ -59,9 +59,10 @@ export class TraineeService {
       subject,
       studentId,
     } = formValue;
-    const filterBy = this.ELEMENT_DATA[id].filterBy;
+    let stIndex = this.ELEMENT_DATA.findIndex(item=> item.id === formValue.id);
+    let filterBy = ELEMENT_DATA[stIndex].filterBy;
     date = this.formatDateUpdate(date);
-    this.ELEMENT_DATA[id] = {
+    this.ELEMENT_DATA[stIndex] = {
       id,
       name,
       grade,
@@ -73,7 +74,7 @@ export class TraineeService {
       zip,
       subject,
       studentId,
-      filterBy: filterBy,
+      filterBy,
     };
   }
   formatDate(date: any) {

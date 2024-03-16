@@ -157,6 +157,7 @@ export class DataComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   chooseRow(row: any) {
     this.currentRowID = row.id;
+    console.log(this.currentRowID);
     if (row.id === this.traineeForm.value.id) {
       this.showDetails = !this.showDetails;
       this.gridChecked = !this.gridChecked;
