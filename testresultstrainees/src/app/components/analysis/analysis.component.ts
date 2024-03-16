@@ -125,13 +125,12 @@ export class AnalysisComponent implements OnInit {
     );
     this.pieChartLabels1 = names;
 
-    
-    let std: any = studentMarks.filter(
-      (item, index) => names[index] === item.name
-    );
+    let std = studentMarks.filter((item,index)=>item.name === names[index])
+  
+    console.log(std);
     let avgPerStd = std.map((item: any) => item.average);
     this.pieChartDatasets1[0].data = avgPerStd;
-    
+
     window.localStorage.setItem(
       'filterAnalysis',
       JSON.stringify({
@@ -205,17 +204,19 @@ export class AnalysisComponent implements OnInit {
     );
   }
 
-
-
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
     }
   }

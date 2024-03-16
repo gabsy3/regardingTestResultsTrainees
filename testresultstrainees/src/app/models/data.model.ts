@@ -27,14 +27,6 @@ export interface filterd {
 
 export let ELEMENT_DATA: trainee[] = [
   {
-    id: '0',
-    name: 'Gabi',
-    date: '10-03-2024',
-    grade: '80',
-    subject: 'History',
-    studentId: '200791291',
-  },
-  {
     id: '1',
     name: 'Gabi',
     date: '30-01-2024',
@@ -106,5 +98,12 @@ export let ELEMENT_DATA: trainee[] = [
     grade: '55',
     subject: 'Algebra',
     studentId: '200791291',
-  },
+  },{
+    id: '10',
+    name: 'Gabi',
+    date: '10-03-2024',
+    grade: '80',
+    subject: 'History',
+    studentId: '200791291',
+  }
 ];
