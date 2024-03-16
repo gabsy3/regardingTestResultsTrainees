@@ -242,7 +242,9 @@ export class DataComponent implements AfterViewInit, OnInit, OnDestroy {
         filter: string
       ): boolean {
         let column = data?.filterBy?.toLowerCase();
-        console.log(data[column]?.toLowerCase(), filter?.toLowerCase());
+        if(column === "studentid"){
+          return data["studentId"]?.includes(filter);
+        }
         return data[column]?.toLowerCase().includes(filter?.toLowerCase());
       };
     }
