@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,9 +10,6 @@ import { trainee } from '../../models/data.model';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
@@ -77,8 +74,11 @@ export class AnalysisComponent implements OnInit {
   AvgSubject: any = [];
 
   traineeService = inject(TraineeService);
-  IDs = new FormControl('');
-  subjects = new FormControl('');
+  formanalysis = new FormGroup({
+    IDs : new FormControl(''),
+    subjects : new FormControl(''),
+  });
+ 
   IDsListDuplicate: any = [];
   subjectListDuplicates: any = [];
   idsList: any = [];
@@ -89,6 +89,7 @@ export class AnalysisComponent implements OnInit {
     this.traineeService.ELEMENT_DATA
   );
   ds = this.dataSource.data;
+  storageArr:any = [{selectedIds:null , selectedSubject:null}]
   ngOnInit(): void {
     let filterStorge: any = window.localStorage.getItem('filterAnalysis');
     filterStorge = JSON.parse(filterStorge);
@@ -106,13 +107,32 @@ export class AnalysisComponent implements OnInit {
       (item: any, index: any) =>
         this.subjectListDuplicates.indexOf(item) === index
     );
-    if (filterStorge) {
-      this.selectedIds = filterStorge.selectedIds;
-      this.IDs.setValue(filterStorge.selectedIds);
 
-      this.selectedSubject = filterStorge.selectedSubject;
-      this.subjects.setValue(filterStorge.selectedSubject);
+   
+    
+
+    if (filterStorge) {
+      if(filterStorge.selectedIds){
+        this.selectedIds = filterStorge.selectedIds;
+        this.formanalysis.controls.IDs.setValue(filterStorge.selectedIds);
+      }
+      if(filterStorge.selectedSubject){
+        this.selectedSubject = filterStorge.selectedSubject;
+        this.formanalysis.controls.subjects.setValue(filterStorge.selectedSubject);
+      }
     }
+
+
+    this.formanalysis.valueChanges.subscribe(x=>{
+      console.log(x);
+      window.localStorage.setItem(
+        'filterAnalysis',
+        JSON.stringify({
+          selectedIds:x.IDs,
+          selectedSubject:x.subjects
+        })
+      );
+    })
   }
 
   displayIdChart() {
@@ -127,17 +147,11 @@ export class AnalysisComponent implements OnInit {
 
     let std = studentMarks.filter((item,index)=>item.name === names[index])
   
-    console.log(std);
     let avgPerStd = std.map((item: any) => item.average);
     this.pieChartDatasets1[0].data = avgPerStd;
 
-    window.localStorage.setItem(
-      'filterAnalysis',
-      JSON.stringify({
-        selectedIds: this.selectedIds,
-        selectedSubject: this.selectedSubject,
-      })
-    );
+    
+
   }
   displayIdChart2() {
     this.sumAvgAllStudent = 0;
@@ -161,13 +175,9 @@ export class AnalysisComponent implements OnInit {
     const avg = this.sumAvgAllStudent / avgPerStd.length;
     avgArr.push(avg);
     this.pieChartDatasets2[0].data = avgArr;
-    window.localStorage.setItem(
-      'filterAnalysis',
-      JSON.stringify({
-        selectedIds: this.selectedIds,
-        selectedSubject: this.selectedSubject,
-      })
-    );
+
+    
+    
   }
   displaySubjectChart() {
     this.AvgSubject = [];
@@ -195,29 +205,6 @@ export class AnalysisComponent implements OnInit {
       this.AvgSubject.push(avg);
     }
     this.pieChartDatasets3[0].data = this.AvgSubject;
-    window.localStorage.setItem(
-      'filterAnalysis',
-      JSON.stringify({
-        selectedIds: this.selectedIds,
-        selectedSubject: this.selectedSubject,
-      })
-    );
-  }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 }
