@@ -26,7 +26,7 @@ export class TraineeService {
 
     this.ELEMENT_DATA.push({
       id:String(this.newId),
-      name,
+      name : name.toLowerCase(),
       grade,
       email,
       date,
@@ -64,7 +64,7 @@ export class TraineeService {
     date = this.formatDateUpdate(date);
     this.ELEMENT_DATA[stIndex] = {
       id,
-      name,
+      name:name.toLowerCase(),
       grade,
       email,
       date,
