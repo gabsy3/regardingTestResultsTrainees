@@ -125,11 +125,13 @@ export class AnalysisComponent implements OnInit {
     );
     this.pieChartLabels1 = names;
 
+    
     let std: any = studentMarks.filter(
       (item, index) => names[index] === item.name
     );
     let avgPerStd = std.map((item: any) => item.average);
     this.pieChartDatasets1[0].data = avgPerStd;
+    
     window.localStorage.setItem(
       'filterAnalysis',
       JSON.stringify({
