@@ -34,9 +34,9 @@
         </div>
 
         <div class="col-6">
-            <h2>Grades avareges per subject</h2>
-            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets3" [labels]="pieChartLabels3"
-                [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [legend]="pieChartLegend3">
+            <h2>Students avareges for students</h2>
+            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets2" [labels]="pieChartLabels2"
+                [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [legend]="pieChartLegend2">
             </canvas>
         </div>
 
@@ -45,14 +45,13 @@
     }
 
     @if(selectedSubject.length){
-    <div class="example-box" cdkDrag>
-        <div class="row">
-            <div class="col-6">
-                <h2>Students avareges for students</h2>
-                <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets2" [labels]="pieChartLabels2"
-                    [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [legend]="pieChartLegend2">
-                </canvas>
-            </div>
+
+    <div class="row">
+        <div class="col-6">
+            <h2>Grades avareges per subject</h2>
+            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets3" [labels]="pieChartLabels3"
+                [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [legend]="pieChartLegend3">
+            </canvas>
         </div>
     </div>
     }
