@@ -31,7 +31,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'gabi',
     date: '30-01-2024',
     grade: '80',
-    subject: 'Algebra',
+    subject: 'algebra',
     studentId: '200791291',
   },
   {
@@ -39,7 +39,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'nofar',
     date: '08-03-2024',
     grade: '85',
-    subject: 'History',
+    subject: 'history',
     studentId: '300111111',
   },
   {
@@ -47,7 +47,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'gabriell',
     date: '10-02-2024',
     grade: '10',
-    subject: 'Algebra',
+    subject: 'algebra',
     studentId: '100123342',
   },
 
@@ -56,7 +56,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'gabi',
     date: '10-03-2024',
     grade: '30',
-    subject: 'History',
+    subject: 'history',
     studentId: '200791291',
   },
   {
@@ -64,7 +64,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'nofar',
     date: '12-05-2023',
     grade: '65',
-    subject: 'Algebra',
+    subject: 'algebra',
     studentId: '300111111',
   },
   {
@@ -72,7 +72,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'gabriell',
     date: '10-03-2023',
     grade: '87',
-    subject: 'History',
+    subject: 'history',
     studentId: '100123342',
   },
   {
@@ -80,7 +80,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'nofar',
     date: '10-01-2024',
     grade: '77',
-    subject: 'Algebra',
+    subject: 'algebra',
     studentId: '300111111',
   },
   {
@@ -88,7 +88,7 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'gabriell',
     date: '10-03-2024',
     grade: '90',
-    subject: 'History',
+    subject: 'history',
     studentId: '100123342',
   },
   {
@@ -96,14 +96,14 @@ export let ELEMENT_DATA: trainee[] = [
     name: 'gabi',
     date: '10-03-2024',
     grade: '55',
-    subject: 'Algebra',
+    subject: 'algebra',
     studentId: '200791291',
   },{
     id: '10',
     name: 'gabi',
     date: '10-03-2024',
     grade: '80',
-    subject: 'History',
+    subject: 'history',
     studentId: '200791291',
   }
 ];

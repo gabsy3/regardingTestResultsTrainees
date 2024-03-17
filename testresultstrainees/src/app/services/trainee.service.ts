@@ -34,7 +34,7 @@ export class TraineeService {
       city,
       country,
       zip,
-      subject,
+      subject : subject.toLowerCase(),
       studentId,
     });
     return true;

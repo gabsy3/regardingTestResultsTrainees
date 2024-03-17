@@ -151,7 +151,7 @@ export class AnalysisComponent implements OnInit {
     this.pieChartDatasets1[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
     
     this.pieChartDatasets1[0].data = avgPerStd;
-    
+    console.log(this.pieChartDatasets1[0]);
     
 
   }
