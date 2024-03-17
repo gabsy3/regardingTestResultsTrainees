@@ -136,6 +136,7 @@ export class AnalysisComponent implements OnInit {
   }
 
   displayIdChart() {
+    this.AvgStudents = [];
     let studentMarks = this.ds.filter((item: any) =>
       this.selectedIds?.includes(item.studentId)
     );
@@ -159,8 +160,10 @@ export class AnalysisComponent implements OnInit {
         }
       });
       let avg = sum / numberToDivide;
+     
       this.AvgStudents.push(avg);
     }
+    console.log(this.AvgStudents);
     this.AvgStudents = this.AvgStudents.filter(
       (item:any, index:any) => this.AvgStudents.indexOf(item) === index
     );
