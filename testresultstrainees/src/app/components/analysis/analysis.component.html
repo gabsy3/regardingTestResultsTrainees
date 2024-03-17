@@ -46,7 +46,7 @@
 
     @if(selectedSubject.length){
 
-    <div class="row">
+    <div class="row py-5 text-center">
         <div class="col-6" draggable="true" id="dragItem" (dragstart)="drag($event)">
             <h2 style="border:1px solid">Grades avareges per subject</h2>
             <canvas baseChart [type]="'pie'" id="canva3" [datasets]="pieChartDatasets3" [labels]="pieChartLabels3"
