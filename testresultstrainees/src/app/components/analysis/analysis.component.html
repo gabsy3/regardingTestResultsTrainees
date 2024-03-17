@@ -4,7 +4,7 @@
             <div class="col-12">
                 <mat-form-field>
                     <mat-label>IDs</mat-label>
-                    <mat-select formControlName="IDs"  multiple [(value)]="selectedIds">
+                    <mat-select formControlName="IDs" multiple [(value)]="selectedIds">
                         @for (id of idsList; track id) {
                         <mat-option [value]="id"
                             (onSelectionChange)="displayIdChart();displayIdChart2()">{{id}}</mat-option>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <mat-form-field>
                     <mat-label>Subject</mat-label>
-                    <mat-select formControlName="subjects"  multiple [(value)]="selectedSubject">
+                    <mat-select formControlName="subjects" multiple [(value)]="selectedSubject">
                         @for (id of subjectList; track id) {
                         <mat-option [value]="id" (onSelectionChange)="displaySubjectChart()">{{id}}</mat-option>
                         }
@@ -23,40 +23,38 @@
                 </mat-form-field>
             </div>
         </form>
-       
+
     </div>
 
 
     @if(selectedIds.length){
     <div class="row">
-        <div class="col-6">
+        <div id="div1" class="col-6" (drop)="drop($event)" (dragover)="allowDrop($event)"
+            style="border:1px solid;width:400px;height:400px;">
             <h2>Grades avarege for each student</h2>
-            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets1" [labels]="pieChartLabels1"
+            <canvas baseChart [type]="'pie'" id="canva1" [datasets]="pieChartDatasets1" [labels]="pieChartLabels1"
                 [options]="pieChartOptions1" [plugins]="pieChartPlugins1" [legend]="pieChartLegend1">
             </canvas>
         </div>
-
-        <div class="col-6">
+        <div id="div2" class="col-6" (drop)="drop($event)" (dragover)="allowDrop($event)"
+            style="border:1px solid;width:400px;height:400px;">
             <h2>Students avareges for students</h2>
-            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets2" [labels]="pieChartLabels2"
+            <canvas baseChart [type]="'pie'" id="canva2" [datasets]="pieChartDatasets2" [labels]="pieChartLabels2"
                 [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [legend]="pieChartLegend2">
             </canvas>
         </div>
-
-
     </div>
     }
 
     @if(selectedSubject.length){
 
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" draggable="true" id="dragItem" (dragstart)="drag($event)">
             <h2>Grades avareges per subject</h2>
-            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets3" [labels]="pieChartLabels3"
+            <canvas baseChart [type]="'pie'" id="canva3" [datasets]="pieChartDatasets3" [labels]="pieChartLabels3"
                 [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [legend]="pieChartLegend3">
             </canvas>
         </div>
     </div>
     }
-
 </div>

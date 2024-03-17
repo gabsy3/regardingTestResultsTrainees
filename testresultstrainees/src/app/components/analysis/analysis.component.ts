@@ -124,7 +124,6 @@ export class AnalysisComponent implements OnInit {
 
 
     this.formanalysis.valueChanges.subscribe(x=>{
-      console.log(x);
       window.localStorage.setItem(
         'filterAnalysis',
         JSON.stringify({
@@ -206,5 +205,30 @@ export class AnalysisComponent implements OnInit {
     }
     this.pieChartDatasets3[0].data = this.AvgSubject;
 
+  }
+
+
+  drag(ev:any){
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+  drop(ev:any){
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    let el = document.getElementById(data);
+    let el2 = document.getElementById(ev.target.id)?.parentElement;
+    let parentEl = el?.parentElement;
+    if(el && el2){
+      el2.replaceWith(el);
+      parentEl?.appendChild(el2);
+      el.draggable = false;
+      el.ondragover = this.allowDrop;
+      el.ondrop = this.drop;
+      el2.draggable =true;
+      el2.ondragstart = this.drag;
+    }
+   
+  }
+  allowDrop(ev:any){
+    ev.preventDefault();
   }
 }
