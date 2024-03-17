@@ -54,6 +54,7 @@ export class MonitorComponent implements OnInit {
   uniqueDataSource: trainee[] = [];
   datauniqueDataSource: trainee[] = [];
   selected: any = [];
+  count = 0;
   filterdSignal = signalState<filterd>({
     pass: true,
     fail: true,
@@ -127,7 +128,29 @@ export class MonitorComponent implements OnInit {
         fail: filterStorge.fail,
       }));
     }
+    this.avg();
   }
+
+  avg() {
+    let obj = this.dataSource.data;
+    for (let item in obj) {
+      this.count = 0;
+      const sum = this.sumOfNames(obj[item].name);
+      this.dataSource.data[item].sum = sum;
+      this.dataSource.data[item].exams = this.count;
+      this.dataSource.data[item].average = sum / this.count;
+    }
+  }
+
+  sumOfNames = (name: any) =>
+  this.dataSource.data
+    .filter((i) => {
+      if (i.name === name) {
+        this.count++;
+      }
+      return i.name === name;
+    })
+    .reduce((a, b) => a + +b.grade, 0);
 
   filterByCheckbox() {
     const passed = this.state.value.passed;
