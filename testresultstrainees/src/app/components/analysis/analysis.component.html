@@ -28,7 +28,7 @@
 
 
     <div class="row">
-        <div id="div1" class="col-6" (drop)="drop($event)" (dragover)="allowDrop($event)">
+        <div id="div1" class="col" (drop)="drop($event)" (dragover)="allowDrop($event)">
             <h2>Grades avarege for each student</h2>
                 <canvas baseChart [type]="'pie'" id="canva1" [datasets]="pieChartDatasets1" [labels]="pieChartLabels1"
                 [options]="pieChartOptions1" [plugins]="pieChartPlugins1" [legend]="pieChartLegend1">
@@ -38,7 +38,7 @@
         </div>
         
        
-        <div  id="div2" class="col-6" (drop)="drop($event)" (dragover)="allowDrop($event)">
+        <div  id="div2" class="col" (drop)="drop($event)" (dragover)="allowDrop($event)">
             <h2>Grades avareges per subject</h2>
             <canvas baseChart [type]="'pie'" id="canva2" [datasets]="pieChartDatasets3" [labels]="pieChartLabels3"
                 [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [legend]="pieChartLegend3">
@@ -50,7 +50,7 @@
 
 
     <div class="row py-5 text-center">
-        <div class="col-6" draggable="true" id="dragItem" (dragstart)="drag($event)">
+        <div class="col" draggable="true" id="dragItem" (dragstart)="drag($event)">
             <h2 style="border:1px solid">Students avareges for students</h2>
             <canvas baseChart [type]="'pie'" id="canva3" [datasets]="pieChartDatasets2" [labels]="pieChartLabels2"
                 [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [legend]="pieChartLegend2" [hidden]="true">

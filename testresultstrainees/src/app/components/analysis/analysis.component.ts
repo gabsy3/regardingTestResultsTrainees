@@ -164,7 +164,6 @@ export class AnalysisComponent implements OnInit {
     this.AvgStudents = this.AvgStudents.filter(
       (item:any, index:any) => this.AvgStudents.indexOf(item) === index
     );
-    console.log(this.AvgStudents);
   
     this.pieChartDatasets1[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
     
@@ -231,31 +230,36 @@ export class AnalysisComponent implements OnInit {
 
 
   drag(ev:any){
-    ev.dataTransfer.setData("text", ev.target.id);
+    if(ev.target.id){
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
   }
   drop(ev:any){
     ev.preventDefault();
     let data = ev.dataTransfer.getData("text");
-    let el = document.getElementById(data);
-    let el2 = document.getElementById(ev.target.id)?.parentElement;
-    let parentEl = el?.parentElement;
-    
-    console.log("el" , el);
-    if(el && el2){
-      el2.replaceWith(el);
-      parentEl?.appendChild(el2);
-      el.draggable = false;
-      el.ondragover = this.allowDrop;
-      el.ondrop = this.drop;
-      el2.draggable =true;
-      el2.ondragstart = this.drag;
+    if(ev.target.id === 'canva1' || ev.target.id === 'canva2' || ev.target.id === 'canva3'){
+      let el = document.getElementById(data);
+      let el2 = document.getElementById(ev.target.id)?.parentElement;
+      let parentEl = el?.parentElement;
       
-      el.getElementsByTagName("h2")[0].style.cssText = "border:none";
-      el2.getElementsByTagName("h2")[0].style.cssText = "border:1px solid";
-      el.getElementsByTagName("canvas")[0].hidden = false;
-      el2.getElementsByTagName("canvas")[0].hidden = true;
-      console.log(el);
+      if(el && el2){
+        el.draggable = false;
+        el.ondragover = this.allowDrop;
+        el.ondrop = this.drop;
+        
+        el2.draggable =true;
+        el2.ondragstart = this.drag;
+        
+        el.getElementsByTagName("h2")[0].style.cssText = "border:none";
+        el2.getElementsByTagName("h2")[0].style.cssText = "border:1px solid";
+        el.getElementsByTagName("canvas")[0].hidden = false;
+        el2.getElementsByTagName("canvas")[0].hidden = true;
+
+        el2.replaceWith(el);
+        parentEl?.appendChild(el2);
+      }
     }
+    
    
   }
   allowDrop(ev:any){
