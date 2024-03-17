@@ -72,7 +72,7 @@ export class AnalysisComponent implements OnInit {
   public pieChartLegend3 = true;
   public pieChartPlugins3 = [];
   AvgSubject: any = [];
-
+  AvgStudents:any = [];
   traineeService = inject(TraineeService);
   formanalysis = new FormGroup({
     IDs : new FormControl(''),
@@ -145,13 +145,30 @@ export class AnalysisComponent implements OnInit {
     );
     this.pieChartLabels1 = names;
 
-    let std = studentMarks.filter((item,index)=>item.name === names[index])
+
+    let numberToDivide = 1;
+
+    for (let i = 0; i < names.length; i++) {
+      let sum = 0;
+      studentMarks.forEach((item) => {
+        if (item.name === names[i]) {
+          numberToDivide = studentMarks.filter(
+            (item) => item.name === names[i]
+          ).length;
+          sum += +item.grade;
+        }
+      });
+      let avg = sum / numberToDivide;
+      this.AvgStudents.push(avg);
+    }
+    this.AvgStudents = this.AvgStudents.filter(
+      (item:any, index:any) => this.AvgStudents.indexOf(item) === index
+    );
+    console.log(this.AvgStudents);
   
-    let avgPerStd = std.map((item: any) => item.average);
     this.pieChartDatasets1[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
     
-    this.pieChartDatasets1[0].data = avgPerStd;
-    console.log(this.pieChartDatasets1[0]);
+    this.pieChartDatasets1[0].data = this.AvgStudents;
     
 
   }
