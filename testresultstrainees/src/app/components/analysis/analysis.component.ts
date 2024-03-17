@@ -217,6 +217,8 @@ export class AnalysisComponent implements OnInit {
     let el = document.getElementById(data);
     let el2 = document.getElementById(ev.target.id)?.parentElement;
     let parentEl = el?.parentElement;
+    
+
     if(el && el2){
       el2.replaceWith(el);
       parentEl?.appendChild(el2);
@@ -225,6 +227,12 @@ export class AnalysisComponent implements OnInit {
       el.ondrop = this.drop;
       el2.draggable =true;
       el2.ondragstart = this.drag;
+      
+      el.getElementsByTagName("h2")[0].style.cssText = "border:none";
+      el2.getElementsByTagName("h2")[0].style.cssText = "border:1px solid";
+      el.getElementsByTagName("canvas")[0].hidden = false;
+      el2.getElementsByTagName("canvas")[0].hidden = true;
+      console.log(el ,el2);
     }
    
   }
