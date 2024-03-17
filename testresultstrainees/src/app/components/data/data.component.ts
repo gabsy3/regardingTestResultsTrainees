@@ -24,7 +24,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TraineeService } from '../../services/trainee.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-data',
@@ -37,6 +37,7 @@ import { DatePipe } from '@angular/common';
     ReactiveFormsModule,
     DatePipe,
     FormsModule,
+    CommonModule
   ],
   templateUrl: './data.component.html',
   styleUrl: './data.component.scss',

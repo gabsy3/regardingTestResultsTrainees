@@ -53,11 +53,11 @@
         <div class="col-4 border">
             <h3>Details</h3>
             <form class="details d-flex justify-content start flex-column" [formGroup]="traineeForm" (ngSubmit)="saveTrainee()">
-                <div class="d-flex align-items-center"><span class="column-name">Student id:</span><input type="text" formControlName="studentId"></div>
-                <div class="d-flex align-items-center"><span class="column-name">Name:</span> <input type="text" formControlName="name"></div>
-                <div class="d-flex align-items-center"><span class="column-name">Grade:</span> <input type="number" formControlName="grade"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Student id:</span><input type="text" formControlName="studentId" [ngClass]="{'fill':traineeForm.value.studentId}" required="true"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Name:</span> <input type="text" formControlName="name" required="true" [ngClass]="{'fill':traineeForm.value.name}"></div>
+                <div class="d-flex align-items-center"><span class="column-name">Grade:</span> <input type="number" formControlName="grade" required="true" [ngClass]="{'fill':traineeForm.value.grade}"></div>
                 <div class="d-flex align-items-center"><span class="column-name">Email:</span> <input type="text" formControlName="email"></div>
-                <div class="d-flex align-items-center"><span class="column-name">Date:</span> <input type="date" formControlName="date">
+                <div class="d-flex align-items-center"><span class="column-name">Date:</span> <input type="date" formControlName="date" required="true" [ngClass]="{'fill':traineeForm.value.date}">
                 </div>
                 <div class="d-flex align-items-center"><span class="column-name">Address:</span> <input type="text" formControlName="address">
                 </div>
@@ -65,7 +65,7 @@
                 <div class="d-flex align-items-center"><span class="column-name">Country:</span> <input type="text" formControlName="country">
                 </div>
                 <div class="d-flex align-items-center"><span class="column-name">Zip:</span> <input type="text" formControlName="zip"></div>
-                <div class="d-flex align-items-center"><span class="column-name">Subject:</span> <input type="text" formControlName="subject">
+                <div class="d-flex align-items-center"><span class="column-name">Subject:</span> <input type="text" formControlName="subject" required="true" [ngClass]="{'fill':traineeForm.value.subject}">
                 </div>
                 <div class="d-flex justify-content-start">
                     <button mat-stroked-button>Save</button>

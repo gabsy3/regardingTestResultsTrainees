@@ -13,4 +13,10 @@
     .row-clicked{
         background:#eee;
     }
+    input:required{
+        border: 1px solid red;
+    }
+    input.fill{
+        border: 1px solid;
+    }
 }
