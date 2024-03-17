@@ -12,7 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { filterd, trainee } from '../../models/data.model';
-import { JsonPipe } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { signalState, patchState } from '@ngrx/signals';
 
 @Component({
@@ -27,6 +27,7 @@ import { signalState, patchState } from '@ngrx/signals';
     MatInputModule,
     MatTableModule,
     JsonPipe,
+    CommonModule
   ],
   templateUrl: './monitor.component.html',
   styleUrl: './monitor.component.scss',

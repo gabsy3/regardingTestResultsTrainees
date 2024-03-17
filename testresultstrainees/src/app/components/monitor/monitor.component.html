@@ -39,7 +39,7 @@
 
             <ng-container matColumnDef="average">
                 <th mat-header-cell *matHeaderCellDef> Average </th>
-                <td mat-cell *matCellDef="let element"> {{element.average}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.average | number : '1.2-2'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="exams">
