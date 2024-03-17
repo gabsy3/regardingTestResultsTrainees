@@ -91,6 +91,10 @@ export class AnalysisComponent implements OnInit {
   ds = this.dataSource.data;
   storageArr:any = [{selectedIds:null , selectedSubject:null}]
   ngOnInit(): void {
+    this.pieChartDatasets1[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
+    this.pieChartDatasets2[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
+    this.pieChartDatasets3[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
+
     let filterStorge: any = window.localStorage.getItem('filterAnalysis');
     filterStorge = JSON.parse(filterStorge);
 
@@ -148,7 +152,7 @@ export class AnalysisComponent implements OnInit {
   
     let avgPerStd = std.map((item: any) => item.average);
     this.pieChartDatasets1[0].data = avgPerStd;
-
+    
     
 
   }
