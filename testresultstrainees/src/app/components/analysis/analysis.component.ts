@@ -91,9 +91,6 @@ export class AnalysisComponent implements OnInit {
   ds = this.dataSource.data;
   storageArr:any = [{selectedIds:null , selectedSubject:null}]
   ngOnInit(): void {
-    this.pieChartDatasets1[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
-    this.pieChartDatasets2[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
-    this.pieChartDatasets3[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
 
     let filterStorge: any = window.localStorage.getItem('filterAnalysis');
     filterStorge = JSON.parse(filterStorge);
@@ -151,6 +148,8 @@ export class AnalysisComponent implements OnInit {
     let std = studentMarks.filter((item,index)=>item.name === names[index])
   
     let avgPerStd = std.map((item: any) => item.average);
+    this.pieChartDatasets1[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
+    
     this.pieChartDatasets1[0].data = avgPerStd;
     
     
@@ -177,6 +176,7 @@ export class AnalysisComponent implements OnInit {
     });
     const avg = this.sumAvgAllStudent / avgPerStd.length;
     avgArr.push(avg);
+    this.pieChartDatasets2[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
     this.pieChartDatasets2[0].data = avgArr;
 
     
@@ -207,6 +207,7 @@ export class AnalysisComponent implements OnInit {
       let avg = sum / numberToDivide;
       this.AvgSubject.push(avg);
     }
+    this.pieChartDatasets3[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
     this.pieChartDatasets3[0].data = this.AvgSubject;
 
   }
@@ -222,7 +223,7 @@ export class AnalysisComponent implements OnInit {
     let el2 = document.getElementById(ev.target.id)?.parentElement;
     let parentEl = el?.parentElement;
     
-
+    console.log("el" , el);
     if(el && el2){
       el2.replaceWith(el);
       parentEl?.appendChild(el2);
