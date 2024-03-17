@@ -232,7 +232,7 @@ export class AnalysisComponent implements OnInit {
       el2.getElementsByTagName("h2")[0].style.cssText = "border:1px solid";
       el.getElementsByTagName("canvas")[0].hidden = false;
       el2.getElementsByTagName("canvas")[0].hidden = true;
-      console.log(el ,el2);
+      console.log(el);
     }
    
   }
