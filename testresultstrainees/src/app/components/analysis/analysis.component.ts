@@ -248,17 +248,21 @@ export class AnalysisComponent implements OnInit {
       
       if(el && el2){
         el.draggable = false;
+        el.ondragstart = null;
         el.ondragover = this.allowDrop;
         el.ondrop = this.drop;
         
         el2.draggable =true;
         el2.ondragstart = this.drag;
+        el2.ondragover = null;
+        el2.ondrop = null;
         
         el.getElementsByTagName("h2")[0].style.cssText = "border:none";
         el2.getElementsByTagName("h2")[0].style.cssText = "border:1px solid";
         el.getElementsByTagName("canvas")[0].hidden = false;
         el2.getElementsByTagName("canvas")[0].hidden = true;
 
+      
         el2.replaceWith(el);
         parentEl?.appendChild(el2);
       }
