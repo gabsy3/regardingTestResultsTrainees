@@ -153,20 +153,21 @@ export class AnalysisComponent implements OnInit {
       let sum = 0;
       studentMarks.forEach((item) => {
         if (item.name === names[i]) {
-          numberToDivide = studentMarks.filter(
-            (item) => item.name === names[i]
-          ).length;
           sum += +item.grade;
         }
+        
       });
+
+      numberToDivide = studentMarks.filter(
+        (item) => item.name === names[i]
+      ).length;
       let avg = sum / numberToDivide;
-     
       this.AvgStudents.push(avg);
     }
-    console.log(this.AvgStudents);
-    this.AvgStudents = this.AvgStudents.filter(
-      (item:any, index:any) => this.AvgStudents.indexOf(item) === index
-    );
+    // console.log(this.AvgStudents);
+    // this.AvgStudents = this.AvgStudents.filter(
+    //   (item:any, index:any) => this.AvgStudents.indexOf(item) === index
+    // );
   
     this.pieChartDatasets1[0].backgroundColor = ['red','blue','green','orange','brown','yellow'];
     
