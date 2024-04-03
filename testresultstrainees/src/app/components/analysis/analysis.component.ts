@@ -218,12 +218,12 @@ export class AnalysisComponent implements OnInit {
       let sum = 0;
       studentMarks.forEach((item) => {
         if (item.subject === subjects[i]) {
-          numberToDivide = studentMarks.filter(
-            (item) => item.subject === subjects[i]
-          ).length;
           sum += +item.grade;
         }
       });
+      numberToDivide = studentMarks.filter(
+        (item) => item.subject === subjects[i]
+      ).length;
       let avg = sum / numberToDivide;
       this.AvgSubject.push(avg);
     }
