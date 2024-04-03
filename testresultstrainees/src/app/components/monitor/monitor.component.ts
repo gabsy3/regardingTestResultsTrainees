@@ -114,6 +114,22 @@ export class MonitorComponent implements OnInit {
         }));
       }
     });
+
+
+    this.names.valueChanges.subscribe((x) => {
+      if (x?.length) {
+        patchState(this.filterdSignal, (state) => ({
+          ...state,
+          name: x,
+        }));
+      } else {
+        patchState(this.filterdSignal, (state) => ({
+          ...state,
+          name: '',
+        }));
+      }
+    });
+
     if (filterStorge) {
       this.state.patchValue({passed:filterStorge.pass,failed:filterStorge.fail})
       this.names.patchValue(filterStorge.name)
@@ -181,18 +197,6 @@ export class MonitorComponent implements OnInit {
       }));
     }
 
-    this.names.valueChanges.subscribe((x) => {
-      if (x?.length) {
-        patchState(this.filterdSignal, (state) => ({
-          ...state,
-          name: x,
-        }));
-      } else {
-        patchState(this.filterdSignal, (state) => ({
-          ...state,
-          name: '',
-        }));
-      }
-    });
+   
   }
 }
